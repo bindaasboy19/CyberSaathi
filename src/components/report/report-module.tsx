@@ -18,20 +18,51 @@ import { reportSchema } from "@/lib/validation/schemas";
 import type { ScamReport } from "@/types";
 import { useLanguage } from "@/components/providers/language-provider";
 
+const emptyReportForm = {
+  type: "",
+  description: "",
+  amountLost: "",
+  contactMethod: "",
+  location: "",
+  evidenceLink: "",
+};
+
+function getReportPrefill() {
+  if (typeof window === "undefined") {
+    return emptyReportForm;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+
+  return {
+    ...emptyReportForm,
+    type: params.get("type") || "",
+    description: params.get("description") || "",
+    amountLost: params.get("amountLost") || "",
+    contactMethod: params.get("contactMethod") || "",
+  };
+}
+
+function hasReportPrefill() {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  return ["type", "description", "amountLost", "contactMethod"].some((key) =>
+    params.has(key),
+  );
+}
+
 export function ReportModule() {
   const { user, profile, configured } = useAuth();
   const { language } = useLanguage();
   const [reports, setReports] = useState<ScamReport[]>([]);
-  const [form, setForm] = useState({
-    type: "",
-    description: "",
-    amountLost: "",
-    contactMethod: "",
-    location: "",
-    evidenceLink: "",
-  });
+  const [form, setForm] = useState(getReportPrefill);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(() =>
+    hasReportPrefill() ? "Report form pre-filled from Legal AI. Review before saving." : null,
+  );
 
   useEffect(() => {
     async function hydrate() {
@@ -81,14 +112,7 @@ export function ReportModule() {
     };
 
     setReports((current) => [nextReport, ...current]);
-    setForm({
-      type: "",
-      description: "",
-      amountLost: "",
-      contactMethod: "",
-      location: "",
-      evidenceLink: "",
-    });
+    setForm(emptyReportForm);
     setSuccess("Report recorded. Use the checklist below to continue your real-world response.");
 
     if (configured) {

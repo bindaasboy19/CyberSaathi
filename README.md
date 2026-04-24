@@ -15,6 +15,7 @@ CyberSaathi is a full-stack cybercrime awareness and assistance platform for Ind
 - Authentication with Firebase email/password
 - Role-aware user profiles: `user`, `expert`, `admin`
 - AI Cyber Assistant with guest mode and Firestore chat persistence
+- Legal AI Assistant for legal-process guidance, evidence checklists, and complaint drafts
 - Awareness Hub for phishing, UPI fraud, identity theft, and response playbooks
 - Legal knowledge section for Indian cyber law basics
 - Community Q&A with answers and upvotes
@@ -33,6 +34,7 @@ CyberSaathi is a full-stack cybercrime awareness and assistance platform for Ind
 - `answers`
 - `chat_history`
 - `reports`
+- `legal_cases`
 
 Rules, indexes, and storage rules are included in:
 
@@ -90,6 +92,7 @@ Recommended Firestore fields:
 - `users/{uid}`: `name`, `email`, `role`, `preferredLanguage`, `createdAt`
 - `chat_history/{chatId}`: `userId`, `title`, `language`, `messages`, `lastMessage`, `createdAt`, `updatedAt`
 - `reports/{reportId}`: `userId`, `type`, `description`, `amountLost`, `contactMethod`, `location`, `status`, `createdAt`
+- `legal_cases/{caseId}`: `userId`, `problemType`, `description`, `generatedReport`, `status`, `createdAt`
 
 ## Deployment
 

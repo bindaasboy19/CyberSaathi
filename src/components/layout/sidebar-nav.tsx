@@ -3,6 +3,8 @@
 import {
   BookOpen,
   Bot,
+  Gauge,
+  Gavel,
   Home,
   MessageSquareText,
   Newspaper,
@@ -19,8 +21,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: navCopy.home, icon: Home },
+  { href: "/dashboard", label: navCopy.dashboard, icon: Gauge },
   { href: "/learn", label: navCopy.learn, icon: BookOpen },
   { href: "/assistant", label: navCopy.assistant, icon: Bot },
+  { href: "/legal", label: navCopy.legal, icon: Gavel },
   { href: "/community", label: navCopy.community, icon: MessageSquareText },
   { href: "/blog", label: navCopy.blog, icon: PenSquare },
   { href: "/news", label: navCopy.news, icon: Newspaper },

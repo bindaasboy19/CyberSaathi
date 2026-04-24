@@ -21,6 +21,7 @@ import type {
   ChatMessage,
   ChatThread,
   Comment,
+  LegalCase,
   Post,
   Question,
   ScamReport,
@@ -211,6 +212,40 @@ export async function fetchReports(userId: string) {
     location: document.data().location,
     evidenceLink: document.data().evidenceLink,
     status: document.data().status ?? "pending",
+    createdAt: toDateString(document.data().createdAt),
+  }));
+}
+
+export async function createLegalCase(
+  legalCase: Omit<LegalCase, "id" | "createdAt">,
+) {
+  const firestore = ensureDb();
+  const document = await addDoc(collection(firestore, "legal_cases"), {
+    ...legalCase,
+    createdAt: serverTimestamp(),
+  });
+
+  return document.id;
+}
+
+export async function fetchLegalCases(userId: string) {
+  const firestore = ensureDb();
+  const snapshot = await getDocs(
+    query(
+      collection(firestore, "legal_cases"),
+      where("userId", "==", userId),
+      orderBy("createdAt", "desc"),
+      limit(20),
+    ),
+  );
+
+  return snapshot.docs.map<LegalCase>((document) => ({
+    id: document.id,
+    userId: document.data().userId,
+    problemType: document.data().problemType,
+    description: document.data().description,
+    generatedReport: document.data().generatedReport,
+    status: document.data().status ?? "draft",
     createdAt: toDateString(document.data().createdAt),
   }));
 }

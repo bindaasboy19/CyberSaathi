@@ -2,8 +2,10 @@ import type { Language, LocalizedString } from "@/types";
 
 export const navCopy = {
   home: { en: "Home", hi: "होम" },
+  dashboard: { en: "Dashboard", hi: "डैशबोर्ड" },
   learn: { en: "Learn", hi: "सीखें" },
   assistant: { en: "AI Assistant", hi: "एआई सहायक" },
+  legal: { en: "Legal AI", hi: "लीगल एआई" },
   community: { en: "Community", hi: "कम्युनिटी" },
   blog: { en: "Blog", hi: "ब्लॉग" },
   news: { en: "News", hi: "समाचार" },

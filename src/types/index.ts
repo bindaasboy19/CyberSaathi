@@ -4,6 +4,7 @@ export type MessageRole = "user" | "assistant";
 export type PostType = "blog" | "case";
 export type ReportStatus = "pending" | "under-review" | "resolved";
 export type RiskLevel = "Low" | "Medium" | "High";
+export type LegalCaseStatus = "draft" | "submitted";
 
 export type LocalizedString = {
   en: string;
@@ -92,6 +93,31 @@ export type ScamReport = {
   location: string;
   evidenceLink?: string;
   status: ReportStatus;
+  createdAt: string;
+};
+
+export type LegalComplaintDraft = {
+  problemType: string;
+  incidentSummary: string;
+  dateTime: string;
+  transactionDetails: string;
+  evidenceList: string[];
+  complaintText: string;
+  immediateActions: string[];
+  reportingSteps: string[];
+  safetyPrecautions: string[];
+  relevantLaws: string[];
+  userRights: string[];
+  followUpQuestions: string[];
+};
+
+export type LegalCase = {
+  id: string;
+  userId: string;
+  problemType: string;
+  description: string;
+  generatedReport: string;
+  status: LegalCaseStatus;
   createdAt: string;
 };
 

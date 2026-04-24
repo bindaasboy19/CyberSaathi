@@ -34,6 +34,28 @@ export const analyzerSchema = z.object({
   language: z.enum(["en", "hi"]).default("en"),
 });
 
+export const legalAssistantSchema = z.object({
+  description: z
+    .string()
+    .transform(clean)
+    .pipe(z.string().min(10, "Describe the incident in a little more detail.").max(3000)),
+  incidentDate: z.string().transform(clean).optional(),
+  transactionDetails: z.string().transform(clean).optional(),
+  amountLost: z.string().transform(clean).optional(),
+  contactMethod: z.string().transform(clean).optional(),
+  platform: z.string().transform(clean).optional(),
+  evidenceNotes: z.string().transform(clean).optional(),
+  mode: z.enum(["chat", "draft"]).default("chat"),
+  language: z.enum(["en", "hi"]).default("en"),
+});
+
+export const legalCaseSchema = z.object({
+  problemType: z.string().transform(clean).pipe(z.string().min(3).max(80)),
+  description: z.string().transform(clean).pipe(z.string().min(10).max(3000)),
+  generatedReport: z.string().transform(clean).pipe(z.string().min(40).max(8000)),
+  status: z.enum(["draft", "submitted"]).default("draft"),
+});
+
 export const questionSchema = z.object({
   title: z.string().transform(clean).pipe(z.string().min(8).max(140)),
   description: z.string().transform(clean).pipe(z.string().min(20).max(1200)),

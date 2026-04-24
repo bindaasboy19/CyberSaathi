@@ -1,6 +1,7 @@
 "use client";
 
 import { AlertTriangle, LoaderCircle, ShieldAlert } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -27,6 +28,10 @@ export function ScamAnalyzer() {
   const [result, setResult] = useState<AnalyzerState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const legalHref = `/legal?${new URLSearchParams({
+    description: content,
+    problemType: result?.riskLevel ? "scam analysis" : "cyber incident",
+  }).toString()}`;
 
   async function handleAnalyze() {
     setLoading(true);
@@ -150,6 +155,23 @@ export function ScamAnalyzer() {
                   </div>
                 </div>
               </div>
+              {result.riskLevel !== "Low" ? (
+                <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 dark:border-sky-900/60 dark:bg-sky-950/30">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                      <p className="font-semibold text-slate-950 dark:text-white">
+                        Need legal filing help?
+                      </p>
+                      <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+                        Convert this scam analysis into a complaint draft and evidence checklist.
+                      </p>
+                    </div>
+                    <Link href={legalHref}>
+                      <Button variant="secondary">Proceed to Legal AI</Button>
+                    </Link>
+                  </div>
+                </div>
+              ) : null}
             </div>
           ) : null}
         </div>

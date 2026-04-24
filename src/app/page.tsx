@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BellRing, Bot, FileText, Newspaper, ShieldAlert } from "lucide-react";
+import { ArrowRight, BellRing, Bot, FileText, Gavel, Newspaper, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -23,6 +23,12 @@ const quickLinks = [
     title: "Create a scam report",
     description: "Capture incident facts before evidence disappears.",
     icon: ShieldAlert,
+  },
+  {
+    href: "/legal",
+    title: "Prepare legal action",
+    description: "Generate a complaint draft and evidence checklist.",
+    icon: Gavel,
   },
   {
     href: "/news",

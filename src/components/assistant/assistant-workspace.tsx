@@ -139,7 +139,12 @@ export function AssistantWorkspace() {
         }),
       });
 
-      const data = (await response.json()) as { reply?: string; error?: string; source?: string };
+      const data = (await response.json()) as {
+        reply?: string;
+        error?: string;
+        source?: string;
+        reason?: string;
+      };
 
       if (!response.ok || !data.reply) {
         throw new Error(data.error || "Unable to get assistant response.");
@@ -154,9 +159,19 @@ export function AssistantWorkspace() {
 
       const updatedMessages = [...nextMessages, assistantMessage];
       setMessages(updatedMessages);
+      window.localStorage.setItem(
+        "cybersathi-assistant-context",
+        JSON.stringify({
+          lastUserMessage: userMessage.content,
+          lastAssistantReply: assistantMessage.content,
+          updatedAt: new Date().toISOString(),
+        }),
+      );
       setStatus(
         data.source === "fallback"
-          ? pick(sharedCopy.aiMissing)
+          ? data.reason
+            ? `Live AI unavailable (${data.reason}). Using safety guidance mode.`
+            : pick(sharedCopy.aiMissing)
           : `Response generated via ${data.source}.`,
       );
       await saveThread(updatedMessages);
