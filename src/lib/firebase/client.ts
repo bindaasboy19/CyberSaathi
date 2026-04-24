@@ -2,7 +2,8 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import type { Analytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -32,4 +33,19 @@ const firebaseApp = firebaseEnabled
 export const auth = firebaseApp ? getAuth(firebaseApp) : null;
 export const db = firebaseApp ? getFirestore(firebaseApp) : null;
 export const storage = firebaseApp ? getStorage(firebaseApp) : null;
-export const analytics = firebaseApp ? getAnalytics(firebaseApp) : null;
+
+let analyticsPromise: Promise<Analytics | null> | null = null;
+
+export function getFirebaseAnalytics() {
+  if (!firebaseApp || typeof window === "undefined") {
+    return Promise.resolve(null);
+  }
+
+  if (!analyticsPromise) {
+    analyticsPromise = isSupported()
+      .then((supported) => (supported ? getAnalytics(firebaseApp) : null))
+      .catch(() => null);
+  }
+
+  return analyticsPromise;
+}
