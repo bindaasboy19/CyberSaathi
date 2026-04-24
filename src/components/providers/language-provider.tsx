@@ -23,7 +23,7 @@ const LanguageContext = createContext<LanguageContextValue | undefined>(undefine
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window !== "undefined") {
-      const savedLanguage = window.localStorage.getItem("cybersathi-language");
+      const savedLanguage = window.localStorage.getItem("CyberSaathi-language");
 
       if (savedLanguage === "en" || savedLanguage === "hi") {
         return savedLanguage;
@@ -35,7 +35,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = language;
-    window.localStorage.setItem("cybersathi-language", language);
+    window.localStorage.setItem("CyberSaathi-language", language);
   }, [language]);
 
   const value = useMemo<LanguageContextValue>(

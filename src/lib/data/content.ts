@@ -152,7 +152,7 @@ export const lawGuides: LawGuide[] = [
     sections: [
       { en: "Sections commonly referenced in cyber incidents include unauthorized access and identity misuse.", hi: "साइबर घटनाओं में अक्सर अनधिकृत एक्सेस और पहचान दुरुपयोग से जुड़ी धाराएं देखी जाती हैं।" },
       { en: "Electronic records, screenshots, transaction IDs, and device logs strengthen your complaint.", hi: "इलेक्ट्रॉनिक रिकॉर्ड, स्क्रीनशॉट, ट्रांजैक्शन ID और डिवाइस लॉग आपकी शिकायत को मजबूत बनाते हैं।" },
-      { en: "CyberSathi gives practical orientation, not formal legal representation.", hi: "CyberSathi व्यावहारिक दिशा देता है, औपचारिक कानूनी प्रतिनिधित्व नहीं।" },
+      { en: "CyberSaathi gives practical orientation, not formal legal representation.", hi: "CyberSaathi व्यावहारिक दिशा देता है, औपचारिक कानूनी प्रतिनिधित्व नहीं।" },
     ],
     nextSteps: [
       { en: "Preserve evidence before deleting messages or formatting devices.", hi: "संदेश हटाने या डिवाइस फ़ॉर्मेट करने से पहले सबूत सुरक्षित रखें।" },
@@ -172,7 +172,7 @@ export const lawGuides: LawGuide[] = [
       { en: "If vulnerable people were targeted, mention age, disability, or coercion clearly.", hi: "यदि कमजोर व्यक्तियों को निशाना बनाया गया हो, तो उम्र, विकलांगता या दबाव को स्पष्ट रूप से लिखें।" },
     ],
     nextSteps: [
-      { en: "Use CyberSathi's report form to organize details before filing a complaint.", hi: "शिकायत दर्ज करने से पहले विवरण व्यवस्थित करने के लिए CyberSathi की रिपोर्ट फॉर्म का उपयोग करें।" },
+      { en: "Use CyberSaathi's report form to organize details before filing a complaint.", hi: "शिकायत दर्ज करने से पहले विवरण व्यवस्थित करने के लिए CyberSaathi की रिपोर्ट फॉर्म का उपयोग करें।" },
       { en: "If the scam is ongoing, mention continuing risk in every report channel.", hi: "यदि स्कैम जारी है, तो हर रिपोर्ट चैनल में लगातार जोखिम का उल्लेख करें।" },
     ],
   },
@@ -332,8 +332,8 @@ export const fallbackNews: NewsArticle[] = [
     title: "Banks increase alerts around remote access and UPI support scams",
     summary:
       "Security advisories continue to warn Indian users against giving screen-sharing or OTP access to fake customer-care callers.",
-    source: "CyberSathi Digest",
-    url: "https://cybersathi.example/news/remote-access-upi",
+    source: "CyberSaathi Digest",
+    url: "https://CyberSaathi.example/news/remote-access-upi",
     publishedAt: "2026-04-10T07:30:00.000Z",
   },
   {
@@ -341,8 +341,8 @@ export const fallbackNews: NewsArticle[] = [
     title: "Public awareness campaigns focus on quick reporting through 1930",
     summary:
       "Victim-support messaging increasingly emphasizes speed, evidence capture, and immediate bank escalation after fraudulent transfers.",
-    source: "CyberSathi Digest",
-    url: "https://cybersathi.example/news/1930-awareness",
+    source: "CyberSaathi Digest",
+    url: "https://CyberSaathi.example/news/1930-awareness",
     publishedAt: "2026-04-09T11:45:00.000Z",
   },
   {
@@ -350,8 +350,8 @@ export const fallbackNews: NewsArticle[] = [
     title: "Identity misuse complaints show the importance of document masking",
     summary:
       "Experts recommend sharing only the minimum required KYC information and masking non-essential fields during verification workflows.",
-    source: "CyberSathi Digest",
-    url: "https://cybersathi.example/news/identity-masking",
+    source: "CyberSaathi Digest",
+    url: "https://CyberSaathi.example/news/identity-masking",
     publishedAt: "2026-04-08T14:15:00.000Z",
   },
 ];

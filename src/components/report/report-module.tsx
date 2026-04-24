@@ -243,7 +243,7 @@ export function ReportModule() {
             <CardContent className="flex items-start gap-3 p-5">
               <FileWarning className="mt-1 h-5 w-5 text-sky-500" />
               <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
-                CyberSathi helps structure the incident, but you should still use official reporting channels such as 1930 and cybercrime.gov.in for urgent escalation.
+                CyberSaathi helps structure the incident, but you should still use official reporting channels such as 1930 and cybercrime.gov.in for urgent escalation.
               </p>
             </CardContent>
           </Card>

@@ -44,7 +44,7 @@ async function hydrateProfile(user: User) {
 
   const fallbackProfile: UserProfile = {
     uid: user.uid,
-    name: user.displayName ?? user.email?.split("@")[0] ?? "CyberSathi User",
+    name: user.displayName ?? user.email?.split("@")[0] ?? "CyberSaathi User",
     email: user.email ?? "",
     role: "user",
     preferredLanguage: "en",

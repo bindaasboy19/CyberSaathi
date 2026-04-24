@@ -1,6 +1,6 @@
-# CyberSathi
+# CyberSaathi
 
-CyberSathi is a full-stack cybercrime awareness and assistance platform for Indian users. It combines AI guidance, scam analysis, structured reporting, awareness content, legal orientation, community Q&A, blogs/case sharing, and cyber news in one production-ready Next.js application.
+CyberSaathi is a full-stack cybercrime awareness and assistance platform for Indian users. It combines AI guidance, scam analysis, structured reporting, awareness content, legal orientation, community Q&A, blogs/case sharing, and cyber news in one production-ready Next.js application.
 
 ## Stack
 
@@ -144,6 +144,6 @@ src/
 ## Notes
 
 - Guest users can use the assistant, but chat persistence requires sign-in.
-- If AI keys are missing, CyberSathi falls back to a local cyber-safety guidance engine instead of failing.
+- If AI keys are missing, CyberSaathi falls back to a local cyber-safety guidance engine instead of failing.
 - If the news API is missing, the news section falls back to bundled awareness headlines.
 - Security rules are included, but for production you may later want dedicated vote/like subcollections to make abuse controls stricter.

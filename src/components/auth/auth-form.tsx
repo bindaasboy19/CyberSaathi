@@ -92,7 +92,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
               Secure access
             </div>
             <CardTitle className="mt-3 text-3xl">
-              {isRegister ? "Create your CyberSathi account" : "Welcome back to CyberSathi"}
+              {isRegister ? "Create your CyberSaathi account" : "Welcome back to CyberSaathi"}
             </CardTitle>
             <CardDescription>
               {isRegister
@@ -217,7 +217,7 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
             </form>
 
             <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
-              {isRegister ? "Already have an account?" : "New to CyberSathi?"}{" "}
+              {isRegister ? "Already have an account?" : "New to CyberSaathi?"}{" "}
               <Link
                 className="font-semibold text-sky-600 hover:text-sky-500 dark:text-sky-300"
                 href={isRegister ? "/login" : "/register"}

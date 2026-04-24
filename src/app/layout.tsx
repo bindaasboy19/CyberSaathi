@@ -6,9 +6,9 @@ import { AppProviders } from "@/components/providers/app-providers";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CyberSathi | AI-powered cybercrime awareness and assistance",
+  title: "CyberSaathi | AI-powered cybercrime awareness and assistance",
   description:
-    "CyberSathi helps Indian users prevent scams, respond to cybercrime incidents, and learn safer digital habits through AI guidance and community support.",
+    "CyberSaathi helps Indian users prevent scams, respond to cybercrime incidents, and learn safer digital habits through AI guidance and community support.",
 };
 
 export default function RootLayout({

@@ -25,8 +25,8 @@ function buildWelcomeMessage(language: "en" | "hi"): ChatMessage {
     role: "assistant",
     content:
       language === "hi"
-        ? "मैं CyberSathi हूँ। यदि आपको किसी संदिग्ध लिंक, UPI अनुरोध, OTP मांग, सोशल अकाउंट टेकओवर या पहचान धोखाधड़ी पर मदद चाहिए, तो स्थिति बताइए।"
-        : "I’m CyberSathi. Tell me what happened or what looks suspicious, and I’ll help you with prevention, containment, evidence, and reporting steps for India.",
+        ? "मैं CyberSaathi हूँ। यदि आपको किसी संदिग्ध लिंक, UPI अनुरोध, OTP मांग, सोशल अकाउंट टेकओवर या पहचान धोखाधड़ी पर मदद चाहिए, तो स्थिति बताइए।"
+        : "I’m CyberSaathi. Tell me what happened or what looks suspicious, and I’ll help you with prevention, containment, evidence, and reporting steps for India.",
     createdAt: new Date().toISOString(),
   };
 }
@@ -91,7 +91,7 @@ export function AssistantWorkspace() {
       await upsertChatThread({
         id: threadId,
         userId: user.uid,
-        title: nextMessages.find((message) => message.role === "user")?.content.slice(0, 64) || "CyberSathi chat",
+        title: nextMessages.find((message) => message.role === "user")?.content.slice(0, 64) || "CyberSaathi chat",
         language,
         messages: nextMessages,
       });
@@ -184,7 +184,7 @@ export function AssistantWorkspace() {
                 </div>
                 <div>
                   <p className="font-display text-lg font-semibold text-slate-950 dark:text-white">
-                    CyberSathi Copilot
+                    CyberSaathi Copilot
                   </p>
                   <p className="text-sm text-slate-500 dark:text-slate-400">
                     Prevention, response, and reporting for Indian users

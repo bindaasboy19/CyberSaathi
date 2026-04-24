@@ -50,7 +50,7 @@ export default function Home() {
                 Cybercrime awareness that actually helps in the moment.
               </h1>
               <p className="max-w-2xl text-base leading-8 text-slate-600 dark:text-slate-300">
-                CyberSathi combines AI guidance, legal orientation, community knowledge, scam
+                CyberSaathi combines AI guidance, legal orientation, community knowledge, scam
                 reporting, and cyber news into a single support platform built for Indian users.
               </p>
             </div>
@@ -141,7 +141,7 @@ export default function Home() {
       <SectionHeading
         eyebrow="Scenario Guides"
         title="Two high-stakes flows users often need quickly"
-        description="CyberSathi translates panic-driven incidents into practical action sequences."
+        description="CyberSaathi translates panic-driven incidents into practical action sequences."
       />
       <div className="grid gap-4 lg:grid-cols-2">
         {scenarioGuides.map((guide) => (

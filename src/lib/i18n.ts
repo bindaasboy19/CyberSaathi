@@ -11,7 +11,7 @@ export const navCopy = {
 } satisfies Record<string, LocalizedString>;
 
 export const sharedCopy = {
-  brandName: { en: "CyberSathi", hi: "साइबरसाथी" },
+  brandName: { en: "CyberSaathi", hi: "साइबरसाथी" },
   brandTagline: {
     en: "AI-powered cybercrime awareness and rapid response for India.",
     hi: "भारत के लिए एआई आधारित साइबर जागरूकता और त्वरित सहायता मंच।",

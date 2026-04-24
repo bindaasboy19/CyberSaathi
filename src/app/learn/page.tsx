@@ -16,7 +16,7 @@ export default function LearnPage() {
       <SectionHeading
         eyebrow="Awareness Hub"
         title="Understand common cybercrime patterns before they become incidents"
-        description="CyberSathi keeps the awareness section practical: signals, prevention habits, and emergency steps instead of broad theory."
+        description="CyberSaathi keeps the awareness section practical: signals, prevention habits, and emergency steps instead of broad theory."
       />
       <div className="grid gap-4 xl:grid-cols-3">
         {awarenessCards.map((card) => (
