@@ -169,50 +169,6 @@ export default function Home() {
           </Card>
         ))}
       </div>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Production shape</CardTitle>
-          <CardDescription>
-            The frontend is optimized for Vercel, while Firebase handles authentication, data, and storage-backed expansion paths.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-3">
-          {[
-            {
-              title: "App Router foundation",
-              text: "Modular pages, reusable components, responsive shell, and dark mode support.",
-              icon: FileText,
-            },
-            {
-              title: "Interactive backend",
-              text: "Firestore collections for users, posts, comments, questions, answers, reports, and chat history.",
-              icon: ShieldAlert,
-            },
-            {
-              title: "AI + heuristics",
-              text: "Live AI route handlers with graceful fallback for scam guidance and analysis.",
-              icon: Bot,
-            },
-          ].map((item) => {
-            const Icon = item.icon;
-
-            return (
-              <div key={item.title} className="rounded-[24px] border border-slate-200/80 p-5 dark:border-slate-800">
-                <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-300">
-                  <Icon className="h-5 w-5" />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-slate-950 dark:text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">
-                  {item.text}
-                </p>
-              </div>
-            );
-          })}
-        </CardContent>
-      </Card>
     </div>
   );
 }
