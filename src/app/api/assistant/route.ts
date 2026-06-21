@@ -56,7 +56,7 @@ export async function POST(request: Request) {
           system: getAssistantSystemPrompt(language),
           prompt: message,
         }),
-        8000,
+        25000,
       );
 
       if (text.trim()) {
@@ -68,6 +68,7 @@ export async function POST(request: Request) {
     } catch (error) {
       const reason =
         error instanceof Error ? error.message : `Unknown ${candidate.provider} error.`;
+      console.error(`AI candidate error [${candidate.provider}:${candidate.modelId}]:`, reason);
       errors.push(`${candidate.provider}:${candidate.modelId} -> ${reason}`);
     }
   }

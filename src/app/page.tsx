@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, BellRing, Bot, FileText, Gavel, Newspaper, ShieldAlert } from "lucide-react";
+import { ArrowRight, BellRing, Bot, Gavel, Newspaper, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
 import { useLanguage } from "@/components/providers/language-provider";

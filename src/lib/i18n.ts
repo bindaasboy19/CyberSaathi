@@ -10,6 +10,8 @@ export const navCopy = {
   blog: { en: "Blog", hi: "ब्लॉग" },
   news: { en: "News", hi: "समाचार" },
   report: { en: "Report Scam", hi: "स्कैम रिपोर्ट" },
+  portals: { en: "Govt Portals", hi: "सरकारी पोर्टल" },
+  help: { en: "Help & Support", hi: "सहायता और संपर्क" },
 } satisfies Record<string, LocalizedString>;
 
 export const sharedCopy = {

@@ -6,10 +6,12 @@ import {
   Gauge,
   Gavel,
   Home,
+  Landmark,
   MessageSquareText,
   Newspaper,
   PenSquare,
   ShieldAlert,
+  HelpCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,6 +31,8 @@ const navItems = [
   { href: "/blog", label: navCopy.blog, icon: PenSquare },
   { href: "/news", label: navCopy.news, icon: Newspaper },
   { href: "/report", label: navCopy.report, icon: ShieldAlert },
+  { href: "/portals", label: navCopy.portals, icon: Landmark },
+  { href: "/help", label: navCopy.help, icon: HelpCircle },
 ];
 
 export function SidebarNav({ mode = "sidebar" }: { mode?: "sidebar" | "mobile" }) {

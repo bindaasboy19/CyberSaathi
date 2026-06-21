@@ -219,7 +219,21 @@ export function CommunityBoard() {
         title="Ask, answer, and learn from real cybercrime situations"
         description="The community feed is public to read, while asking and answering require authenticated, role-aware participation."
       />
-      <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+
+      {error ? (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-100 flex items-center justify-between gap-3">
+          <span>{error}</span>
+          <button
+            onClick={() => setError(null)}
+            className="text-xs uppercase tracking-wider font-bold text-amber-700 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100"
+            type="button"
+          >
+            Dismiss
+          </button>
+        </div>
+      ) : null}
+
+      <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
         <Card>
           <CardHeader>
             <CardTitle>Ask a question</CardTitle>
@@ -252,9 +266,6 @@ export function CommunityBoard() {
             <Button className="w-full" onClick={() => void handleQuestionSubmit()}>
               Post question
             </Button>
-            {error ? (
-              <p className="text-sm text-rose-500">{error}</p>
-            ) : null}
             <div className="rounded-[24px] border border-emerald-200/70 bg-emerald-50/70 p-4 text-sm leading-6 text-emerald-900 dark:border-emerald-900/60 dark:bg-emerald-950/20 dark:text-emerald-100">
               Experts and admins are marked so users can distinguish higher-trust answers.
             </div>

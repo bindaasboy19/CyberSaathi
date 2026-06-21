@@ -172,3 +172,58 @@ export type ScamAnalysis = {
   explanation: string;
   recommendedActions: string[];
 };
+
+export type Course = {
+  id: string;
+  title: LocalizedString;
+  description: LocalizedString;
+  track: "beginner" | "intermediate" | "advanced";
+  icon: string;
+  order: number;
+};
+
+export type Module = {
+  id: string;
+  courseId: string;
+  title: LocalizedString;
+  description: LocalizedString;
+  order: number;
+};
+
+export type Lesson = {
+  id: string;
+  courseId: string;
+  moduleId: string;
+  title: LocalizedString;
+  order: number;
+  contentType: "text" | "video" | "image" | "mixed";
+  content: LocalizedString;
+  videoUrl?: string;
+  imageUrl?: string;
+  teacher?: LocalizedString;
+  duration?: number;
+};
+
+export type QuizQuestion = {
+  id: string;
+  question: LocalizedString;
+  options: LocalizedString[];
+  correctOptionIdx: number;
+  explanation: LocalizedString;
+};
+
+export type Quiz = {
+  id: string;
+  moduleId: string;
+  questions: QuizQuestion[];
+};
+
+export type UserProgress = {
+  userId: string;
+  courseId: string;
+  completedLessons: string[];
+  quizScores: Record<string, number>;
+  progressPercent: number;
+  unlockedBadge: boolean;
+  lastUpdated?: string;
+};

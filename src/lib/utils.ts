@@ -48,7 +48,14 @@ export function toDateString(value: unknown) {
 }
 
 export function createId(prefix: string) {
-  return `${prefix}-${crypto.randomUUID()}`;
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return `${prefix}-${crypto.randomUUID()}`;
+  }
+  // Math.random fallback (UUID-like random hex)
+  const randomHex = Array.from({ length: 4 }, () =>
+    Math.floor(Math.random() * 0xffffffff).toString(16).padStart(8, "0")
+  ).join("-");
+  return `${prefix}-${randomHex}`;
 }
 
 export function pickText<T extends { en: string; hi: string }>(

@@ -196,7 +196,21 @@ export function BlogHub() {
         title="Share lessons learned from real incidents"
         description="Publish prevention writeups, post-mortems, or anonymized case stories that help others avoid the same trap."
       />
-      <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+
+      {error ? (
+        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-100 flex items-center justify-between gap-3">
+          <span>{error}</span>
+          <button
+            onClick={() => setError(null)}
+            className="text-xs uppercase tracking-wider font-bold text-amber-700 hover:text-amber-900 dark:text-amber-300 dark:hover:text-amber-100"
+            type="button"
+          >
+            Dismiss
+          </button>
+        </div>
+      ) : null}
+
+      <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
         <Card>
           <CardHeader>
             <CardTitle>Create a post</CardTitle>

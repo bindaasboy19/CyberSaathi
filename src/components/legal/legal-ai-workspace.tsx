@@ -30,7 +30,7 @@ import { Input } from "@/components/ui/input";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Textarea } from "@/components/ui/textarea";
 import { createLegalCase, fetchLegalCases } from "@/lib/firebase/firestore";
-import { formatRelativeDate } from "@/lib/utils";
+import { createId, formatRelativeDate } from "@/lib/utils";
 import type { LegalCase, LegalComplaintDraft } from "@/types";
 
 type Tab = "chat" | "complaint" | "evidence";
@@ -211,7 +211,7 @@ export function LegalAIWorkspace() {
     setSaving(true);
 
     const nextCase: LegalCase = {
-      id: `legal-${crypto.randomUUID()}`,
+      id: createId("legal"),
       userId: user.uid,
       problemType: response.draft.problemType,
       description: form.description,
@@ -250,8 +250,36 @@ export function LegalAIWorkspace() {
       return;
     }
 
-    await navigator.clipboard.writeText(response.draft.complaintText);
-    setNotice("Complaint draft copied.");
+    setError(null);
+    setNotice(null);
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(response.draft.complaintText);
+        setNotice("Complaint draft copied.");
+      } else {
+        throw new Error("Clipboard API not supported or permissions blocked.");
+      }
+    } catch {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = response.draft.complaintText;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        const successful = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (successful) {
+          setNotice("Complaint draft copied (fallback method).");
+        } else {
+          throw new Error("execCommand copy failed");
+        }
+      } catch {
+        setError("Failed to copy automatically. Please select and copy the text manually from the field below.");
+      }
+    }
   }
 
   async function downloadPdf() {
@@ -260,18 +288,30 @@ export function LegalAIWorkspace() {
       return;
     }
 
-    const { jsPDF } = await import("jspdf");
-    const pdf = new jsPDF();
-    const lines = pdf.splitTextToSize(response.draft.complaintText, 180);
+    setError(null);
+    setNotice(null);
 
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(14);
-    pdf.text("CyberSaathi Complaint Draft", 15, 18);
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(10);
-    pdf.text("AI guidance only. Review before filing.", 15, 26);
-    pdf.text(lines, 15, 38);
-    pdf.save(`cybersaathi-${response.draft.problemType.replace(/\s+/g, "-")}.pdf`);
+    try {
+      const { jsPDF } = await import("jspdf");
+      const pdf = new jsPDF();
+      const lines = pdf.splitTextToSize(response.draft.complaintText, 180);
+
+      pdf.setFont("helvetica", "bold");
+      pdf.setFontSize(14);
+      pdf.text("CyberSaathi Complaint Draft", 15, 18);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(10);
+      pdf.text("AI guidance only. Review before filing.", 15, 26);
+      pdf.text(lines, 15, 38);
+      pdf.save(`cybersaathi-${response.draft.problemType.replace(/\s+/g, "-")}.pdf`);
+      setNotice("PDF downloaded successfully.");
+    } catch (pdfError) {
+      setError(
+        pdfError instanceof Error
+          ? `Failed to generate PDF: ${pdfError.message}`
+          : "Failed to generate PDF. Please try copying the text instead."
+      );
+    }
   }
 
   const evidenceList = response?.draft.evidenceList ?? defaultEvidence;
@@ -288,7 +328,7 @@ export function LegalAIWorkspace() {
         This is an AI-based guidance tool, not a licensed lawyer. It can help you organize facts and next steps, but it cannot guarantee legal outcomes.
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[390px_minmax(0,1fr)]">
+      <div className="grid gap-6 lg:grid-cols-[390px_minmax(0,1fr)]">
         <Card>
           <CardHeader>
             <CardTitle>Incident details</CardTitle>

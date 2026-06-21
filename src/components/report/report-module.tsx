@@ -13,7 +13,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Textarea } from "@/components/ui/textarea";
 import { responseChecklist } from "@/lib/data/content";
 import { createReport, fetchReports } from "@/lib/firebase/firestore";
-import { formatRelativeDate, pickText } from "@/lib/utils";
+import { createId, formatRelativeDate, pickText } from "@/lib/utils";
 import { reportSchema } from "@/lib/validation/schemas";
 import type { ScamReport } from "@/types";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -99,7 +99,7 @@ export function ReportModule() {
     }
 
     const nextReport: ScamReport = {
-      id: `report-${crypto.randomUUID()}`,
+      id: createId("report"),
       userId: user.uid,
       type: parsed.data.type,
       description: parsed.data.description,
@@ -143,7 +143,7 @@ export function ReportModule() {
         title="Capture the incident before details disappear"
         description="This module organizes your scam evidence, transaction context, and response status in the `reports` collection."
       />
-      <div className="grid gap-6 xl:grid-cols-[380px_minmax(0,1fr)]">
+      <div className="grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]">
         <Card>
           <CardHeader>
             <CardTitle>Report a scam</CardTitle>

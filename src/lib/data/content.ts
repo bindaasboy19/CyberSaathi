@@ -13,16 +13,20 @@ import type {
 
 export const assistantSuggestions: LocalizedString[] = [
   {
-    en: "I clicked a suspicious UPI link. What should I do now?",
-    hi: "मैंने एक संदिग्ध UPI लिंक खोला है। अब क्या करूं?",
+    en: "What should I do if I receive a fake video call claiming to be a 'Digital Arrest' by police?",
+    hi: "अगर मुझे पुलिस द्वारा 'डिजिटल अरेस्ट' का दावा करने वाला फर्जी वीडियो कॉल आए तो मुझे क्या करना चाहिए?",
   },
   {
-    en: "How can I tell if a KYC update message is fake?",
-    hi: "KYC अपडेट वाला संदेश नकली है या नहीं, कैसे पहचानूँ?",
+    en: "I lost money in a part-time job scam on Telegram. How can I get a refund?",
+    hi: "मैंने टेलीग्राम पर पार्ट-टाइम जॉब स्कैम में पैसे खो दिए। मुझे रिफंड कैसे मिल सकता है?",
   },
   {
-    en: "Someone asked for my OTP and bank details. Guide me step by step.",
-    hi: "किसी ने मेरा OTP और बैंक जानकारी मांगी है। मुझे चरण-दर-चरण मार्गदर्शन दें।",
+    en: "I was added to a WhatsApp group promising high returns in stock trading. Is it fraud?",
+    hi: "मुझे स्टॉक ट्रेडिंग में भारी मुनाफे का दावा करने वाले व्हाट्सएप ग्रुप में जोड़ा गया है। क्या यह धोखाधड़ी है?",
+  },
+  {
+    en: "Someone used an AI voice clone of my relative to ask for urgent money. What steps to take?",
+    hi: "किसी ने पैसे मांगने के लिए मेरे रिश्तेदार की एआई वॉयस क्लोन का इस्तेमाल किया। क्या कदम उठाएं?",
   },
 ];
 
@@ -329,31 +333,124 @@ export const mockComments: Comment[] = [
 export const fallbackNews: NewsArticle[] = [
   {
     id: "n-1",
-    title: "Banks increase alerts around remote access and UPI support scams",
-    summary:
-      "Security advisories continue to warn Indian users against giving screen-sharing or OTP access to fake customer-care callers.",
-    source: "CyberSaathi Digest",
-    url: "https://CyberSaathi.example/news/remote-access-upi",
-    publishedAt: "2026-04-10T07:30:00.000Z",
+    title: "Global Privacy Law Updates: How Regulations Impact Users Worldwide",
+    summary: "From Europe's GDPR to newly implemented data frameworks across Asia and the Americas, privacy laws are tightening. New regulations introduce heavy fines for unauthorized data exposure and grant consumers stronger digital rights.",
+    source: "Global Tech Digest",
+    url: "#",
+    publishedAt: "2026-05-28T09:00:00.000Z",
   },
   {
     id: "n-2",
-    title: "Public awareness campaigns focus on quick reporting through 1930",
-    summary:
-      "Victim-support messaging increasingly emphasizes speed, evidence capture, and immediate bank escalation after fraudulent transfers.",
-    source: "CyberSaathi Digest",
-    url: "https://CyberSaathi.example/news/1930-awareness",
-    publishedAt: "2026-04-09T11:45:00.000Z",
+    title: "Rise of AI Voice Cloning Scams Globally: Security Experts Alert Families",
+    summary: "Criminal syndicates are using short social media audio snippets to clone voices of family members, calling relatives to request urgent bank transfers. Cybersecurity agencies urge people to verify caller identity using offline checkups.",
+    source: "Cybersecurity News Network",
+    url: "#",
+    publishedAt: "2026-05-27T14:30:00.000Z",
   },
   {
     id: "n-3",
-    title: "Identity misuse complaints show the importance of document masking",
-    summary:
-      "Experts recommend sharing only the minimum required KYC information and masking non-essential fields during verification workflows.",
-    source: "CyberSaathi Digest",
-    url: "https://CyberSaathi.example/news/identity-masking",
-    publishedAt: "2026-04-08T14:15:00.000Z",
+    title: "The Golden Hour: How Quick Reporting Minimizes Cyber Fraud Losses",
+    summary: "International financial institutions and law enforcement agencies release data confirming that reporting fraudulent bank transfers within the first hour increases the chances of freezing stolen funds by over 70%.",
+    source: "Financial Protection Hub",
+    url: "#",
+    publishedAt: "2026-05-26T08:15:00.000Z",
   },
+  {
+    id: "n-4",
+    title: "Combating Cyber Harassment: International Digital Rights Standards",
+    summary: "As online harassment and digital stalking increase globally, a coalition of digital rights groups has proposed unified legal guidelines to speed up investigations and protect victims across borders.",
+    source: "Global Digital Rights",
+    url: "#",
+    publishedAt: "2026-05-25T11:00:00.000Z",
+  },
+  {
+    id: "n-5",
+    title: "App Store Audits: Security Standards Target Intrusive App Permissions",
+    summary: "Major mobile application markets are rolling out stricter audits targeting simple utility and game applications that demand unnecessary permissions, such as contact reading, SMS access, or location tracking.",
+    source: "Mobile Security Monitor",
+    url: "#",
+    publishedAt: "2026-05-24T10:20:00.000Z",
+  },
+  {
+    id: "n-6",
+    title: "Digital Wallet Safety: Spotting QR Code and Payment Request Fraud",
+    summary: "As digital wallet adoption grows, experts warn of scams involving QR codes sent on chat networks claiming to credit cash. Financial authorities remind users that receiving funds never requires entering a passcode.",
+    source: "Global FinTech Watch",
+    url: "#",
+    publishedAt: "2026-05-23T16:45:00.000Z",
+  },
+  {
+    id: "n-7",
+    title: "Deepfakes and Digital Identity Theft: Global Initiative Launches to Spot Synthetic Media",
+    summary: "Tech firms and research institutions form a global alliance to deploy detection systems against AI-generated deepfakes. Systems look for erratic eye movements, lighting inconsistencies, and audio sync gaps.",
+    source: "AI Watch Global",
+    url: "#",
+    publishedAt: "2026-05-22T13:10:00.000Z",
+  },
+  {
+    id: "n-8",
+    title: "Public Wi-Fi Vulnerabilities Highlighted in New Cybersecurity Report",
+    summary: "A new security report reveals that over 30% of public Wi-Fi hotspots are vulnerable to Man-in-the-Middle attacks. Security teams recommend using trusted VPNs and secure mobile hotspots in transit.",
+    source: "Cybersecurity News Network",
+    url: "#",
+    publishedAt: "2026-05-21T07:55:00.000Z",
+  },
+  {
+    id: "n-9",
+    title: "International Job Scams Target Freelancers Across Major Messaging Platforms",
+    summary: "A worldwide phishing campaign is targeting job seekers via Telegram and WhatsApp with fake work-from-home tasks. Victims are initially paid minor fees before being coerced into large investment schemes.",
+    source: "Global Fraud Alert",
+    url: "#",
+    publishedAt: "2026-05-20T12:40:00.000Z",
+  },
+  {
+    id: "n-10",
+    title: "Global Increase in WhatsApp Hijacking Prompts Mandatory 2FA Advisory",
+    summary: "As verification code intercepts surge, cybersecurity groups advise all messaging app users to enable two-factor verification (2FA) PIN codes. The setup adds a secondary lock that prevents hijack attempts.",
+    source: "Security Digest Weekly",
+    url: "#",
+    publishedAt: "2026-05-19T09:15:00.000Z",
+  },
+  {
+    id: "n-11",
+    title: "Global Sextortion Syndicates Targeted by International Law Enforcement",
+    summary: "A coordinated joint operation by Interpol and global police divisions has shut down major servers used for cyber blackmail. Agencies reiterate advice: never pay ransom, secure accounts, and report immediately.",
+    source: "International Justice News",
+    url: "#",
+    publishedAt: "2026-05-18T15:25:00.000Z",
+  },
+  {
+    id: "n-12",
+    title: "Digital Arrest Fraud: Interpol Warns of Scammers Posing as Law Officials",
+    summary: "Interpol issues a red alert warning about cyber extortionists posing as state law enforcement officers via video calls, coercing victims into 'digital arrests'. Officials clarify that online custody does not exist.",
+    source: "Global Fraud Alert",
+    url: "#",
+    publishedAt: "2026-05-17T11:50:00.000Z",
+  },
+  {
+    id: "n-13",
+    title: "E-Commerce Fraud Soars: How to Spot Fake Online Shopping Portals",
+    summary: "Over 5,000 new counterfeit shopping websites are detected daily. Cybersecurity organizations advise shoppers to inspect domain names closely, check for contact information, and ignore unrealistic discounts.",
+    source: "Consumer Trust Watch",
+    url: "#",
+    publishedAt: "2026-05-16T14:10:00.000Z",
+  },
+  {
+    id: "n-14",
+    title: "Protecting Vulnerable Users: Tech Support Scams Target Elders Globally",
+    summary: "Global cyber taskforces launch outreach programs to protect senior citizens from fake tech support warnings and automated security calls claiming bank accounts are compromised.",
+    source: "Global Tech Digest",
+    url: "#",
+    publishedAt: "2026-05-15T10:05:00.000Z",
+  },
+  {
+    id: "n-15",
+    title: "International Package Delivery Scams Exploit Custom Clearances",
+    summary: "Scammers are sending automated messages claiming international parcels are held due to illegal items or unpaid customs fees. Postal services clarify they never request digital payments for delivery settling.",
+    source: "International Logistical Security",
+    url: "#",
+    publishedAt: "2026-05-14T08:30:00.000Z",
+  }
 ];
 
 export const safetyQuestions: SafetyQuestion[] = [
@@ -474,6 +571,246 @@ export const safetyQuestions: SafetyQuestion[] = [
         label: { en: "I mainly delete the message and move on.", hi: "मैं मुख्यतः संदेश हटाकर आगे बढ़ जाता/जाती हूँ।" },
         score: 3,
         insight: { en: "Deleting evidence can weaken later complaints.", hi: "सबूत हटाने से बाद की शिकायत कमजोर पड़ सकती है।" },
+      },
+    ],
+  },
+  {
+    id: "sq-6",
+    question: {
+      en: "What is your action when a caller claims to be a police officer stating your parcel contains drugs and threatens a 'Digital Arrest'?",
+      hi: "जब कोई खुद को पुलिस अधिकारी बताकर दावा करे कि आपके पार्सल में ड्रग्स है और 'डिजिटल अरेस्ट' की धमकी दे, तो आप क्या करेंगे?",
+    },
+    options: [
+      {
+        label: { en: "I immediately hang up and report to 1930 or cybercrime.gov.in.", hi: "मैं तुरंत फोन काटकर 1930 या cybercrime.gov.in पर रिपोर्ट करता/करती हूँ।" },
+        score: 20,
+        insight: { en: "Excellent. Law enforcement never makes digital arrests on video calls or demands money.", hi: "शानदार। कानून प्रवर्तन एजेंसियां कभी वीडियो कॉल पर डिजिटल अरेस्ट नहीं करतीं न ही पैसे मांगती हैं।" },
+      },
+      {
+        label: { en: "I join a video call to clear my name.", hi: "मैं खुद को बेगुनाह साबित करने के लिए वीडियो कॉल में शामिल होता/होती हूँ।" },
+        score: 5,
+        insight: { en: "Scammers use fake police setups to extort money. Avoid video calls.", hi: "स्कैमर्स जबरन वसूली के लिए नकली पुलिस सेटअप का उपयोग करते हैं। वीडियो कॉल से बचें।" },
+      },
+      {
+        label: { en: "I transfer a safety deposit to clear my records.", hi: "मैं अपने रिकॉर्ड साफ करने के लिए सुरक्षा जमा राशि ट्रांसफर करता/करती हूँ।" },
+        score: 0,
+        insight: { en: "Critical risk. Police never ask for money transfers. Seek immediate family/legal help.", hi: "गंभीर खतरा। पुलिस कभी पैसे ट्रांसफर करने को नहीं कहती। तुरंत मदद लें।" },
+      },
+    ],
+  },
+  {
+    id: "sq-7",
+    question: {
+      en: "How do you handle messages offering high-paying part-time jobs for simply liking online videos?",
+      hi: "केवल वीडियो लाइक करने के लिए भारी भुगतान वाले पार्ट-टाइम जॉब के संदेशों से आप कैसे निपटते हैं?",
+    },
+    options: [
+      {
+        label: { en: "I block and report the sender immediately.", hi: "मैं तुरंत भेजने वाले को ब्लॉक और रिपोर्ट करता/करती हूँ।" },
+        score: 20,
+        insight: { en: "Perfect. These are prepay task scams designed to drain your savings.", hi: "बिल्कुल सही। ये पैसे जमा कराने वाले टास्क स्कैम होते हैं जो आपकी बचत हड़प लेते हैं।" },
+      },
+      {
+        label: { en: "I do a few free tasks to earn some money and then leave.", hi: "मैं कुछ पैसे कमाने के लिए शुरुआत के मुफ्त टास्क कर लेता/लेती हूँ और फिर छोड़ देता हूँ।" },
+        score: 8,
+        insight: { en: "Risky. Scammers pay small amounts first to lure you into depositing larger sums.", hi: "जोखिम भरा। स्कैमर्स आपको फंसाने के लिए शुरुआत में छोटे भुगतान करते हैं।" },
+      },
+      {
+        label: { en: "I pay the deposit fee to unlock higher-tier VIP tasks.", hi: "मैं अधिक कमाई वाले वीआईपी टास्क अनलॉक करने के लिए जमा राशि का भुगतान करता/करती हूँ।" },
+        score: 2,
+        insight: { en: "Severe risk. You will lose all your money and won't be able to withdraw.", hi: "भारी जोखिम। आप अपनी पूरी रकम खो देंगे और उसे कभी निकाल नहीं पाएंगे।" },
+      },
+    ],
+  },
+  {
+    id: "sq-8",
+    question: {
+      en: "A support caller asks you to download AnyDesk or TeamViewer to fix an app issue. What do you do?",
+      hi: "एक सपोर्ट कॉलर ऐप की समस्या ठीक करने के लिए AnyDesk या TeamViewer डाउनलोड करने को कहे, तो आप क्या करेंगे?",
+    },
+    options: [
+      {
+        label: { en: "I refuse. These apps allow full remote control of my device.", hi: "मैं मना कर देता हूँ। ये ऐप मेरे डिवाइस का पूरा रिमोट कंट्रोल दे देते हैं।" },
+        score: 20,
+        insight: { en: "Excellent security awareness. Never share remote control of your phone.", hi: "शानदार सुरक्षा जागरूकता। अपने फोन का रिमोट कंट्रोल कभी साझा न करें।" },
+      },
+      {
+        label: { en: "I install it but watch my screen closely.", hi: "मैं इंस्टॉल करता हूँ लेकिन अपनी स्क्रीन पर ध्यान रखता हूँ।" },
+        score: 5,
+        insight: { en: "Scammers can read OTPs and access passwords in seconds. High risk.", hi: "स्कैमर्स सेकंडों में OTP और पासवर्ड देख सकते हैं। यह अत्यधिक जोखिम भरा है।" },
+      },
+      {
+        label: { en: "I install it since they are official support.", hi: "मैं इंस्टॉल कर लेता हूँ क्योंकि वे आधिकारिक सपोर्ट हैं।" },
+        score: 0,
+        insight: { en: "Critical. Real support agents will never ask you to install screen-sharing software.", hi: "गंभीर। असली सपोर्ट एजेंट कभी स्क्रीन शेयरिंग सॉफ्टवेयर इंस्टॉल करने को नहीं कहेंगे।" },
+      },
+    ],
+  },
+  {
+    id: "sq-9",
+    question: {
+      en: "What is your main precaution when connecting to free public Wi-Fi?",
+      hi: "मुफ्त सार्वजनिक वाई-फाई से कनेक्ट करते समय आपकी मुख्य सावधानी क्या होती है?",
+    },
+    options: [
+      {
+        label: { en: "I avoid financial transactions and use a VPN.", hi: "मैं वित्तीय लेन-देन से बचता हूँ और वीपीएन का उपयोग करता हूँ।" },
+        score: 20,
+        insight: { en: "Strong protection. Public Wi-Fi is highly vulnerable to interception.", hi: "मजबूत सुरक्षा। सार्वजनिक वाई-फाई पर डेटा चोरी होने का खतरा रहता है।" },
+      },
+      {
+        label: { en: "I use it normally but log out when finished.", hi: "मैं इसे सामान्य रूप से उपयोग करता हूँ लेकिन काम खत्म होने पर लॉगआउट कर देता हूँ।" },
+        score: 10,
+        insight: { en: "Moderate risk. Intercepted data can still reveal sensitive session tokens.", hi: "मध्यम जोखिम। बीच में रोका गया डेटा आपकी संवेदनशील जानकारी उजागर कर सकता है।" },
+      },
+      {
+        label: { en: "I log in to bank accounts if the connection is fast.", hi: "अगर कनेक्शन तेज है तो मैं बैंक खातों में लॉगिन कर लेता/लेती हूँ।" },
+        score: 2,
+        insight: { en: "Very risky. Hackers can capture login details using fake network hotspots.", hi: "अत्यधिक जोखिम भरा। हैकर्स फर्जी हॉटस्पॉट बनाकर लॉगिन विवरण चुरा सकते हैं।" },
+      },
+    ],
+  },
+  {
+    id: "sq-10",
+    question: {
+      en: "Someone calls and says your relative met with an accident and needs urgent money via UPI. What is your first step?",
+      hi: "कोई फोन कर कहे कि आपके रिश्तेदार का एक्सीडेंट हो गया है और तुरंत UPI से पैसे चाहिए। आपका पहला कदम क्या होगा?",
+    },
+    options: [
+      {
+        label: { en: "I hang up and call the relative or their immediate family directly.", hi: "मैं फोन काटकर सीधे उस रिश्तेदार या उनके परिवार को कॉल करता हूँ।" },
+        score: 20,
+        insight: { en: "Great response. Scammers use panic tactics and AI voice clones to extort money.", hi: "बहुत बढ़िया। स्कैमर्स हड़बड़ी का फायदा उठाने के लिए घबराहट और एआई वॉयस क्लोन का उपयोग करते हैं।" },
+      },
+      {
+        label: { en: "I immediately transfer the money as it is an emergency.", hi: "मैं आपातकालीन स्थिति समझकर तुरंत पैसे ट्रांसफर कर देता/देती हूँ।" },
+        score: 3,
+        insight: { en: "High risk. Always verify independently before sending urgent funds to unknown bank accounts.", hi: "बड़ा जोखिम। किसी भी अज्ञात बैंक खाते में पैसे भेजने से पहले स्वतंत्र रूप से जांच करें।" },
+      },
+      {
+        label: { en: "I ask the caller to send details and try to negotiate.", hi: "मैं कॉलर से और विवरण मांगता हूँ और मोलभाव करने की कोशिश करता हूँ।" },
+        score: 8,
+        insight: { en: "Risky. Engaging gives scammers more opportunities to manipulate you.", hi: "जोखिम भरा। बातचीत करने से स्कैमर्स को आपको प्रभावित करने का अधिक मौका मिलता है।" },
+      },
+    ],
+  },
+  {
+    id: "sq-11",
+    question: {
+      en: "How do you find customer support numbers for banks or courier services?",
+      hi: "आप बैंकों या कूरियर सेवाओं के कस्टमर सपोर्ट नंबर कैसे ढूंढते हैं?",
+    },
+    options: [
+      {
+        label: { en: "Only from the official app or official website.", hi: "केवल आधिकारिक ऐप या आधिकारिक वेबसाइट से।" },
+        score: 20,
+        insight: { en: "Perfect. Scammers publish fake support numbers on search engine maps.", hi: "सटीक। स्कैमर्स सर्च इंजन मैप्स पर फर्जी सपोर्ट नंबर प्रकाशित कर देते हैं।" },
+      },
+      {
+        label: { en: "I search on Google and call the first number that appears.", hi: "मैं गूगल पर सर्च करता हूँ और जो पहला नंबर दिखता है उसपर कॉल करता हूँ।" },
+        score: 4,
+        insight: { en: "Extremely dangerous. Search ads often link to fraudulent numbers.", hi: "बेहद खतरनाक। सर्च विज्ञापनों में अक्सर धोखाधड़ी वाले नंबर होते हैं।" },
+      },
+      {
+        label: { en: "I ask in public online forums or search social media.", hi: "मैं सार्वजनिक ऑनलाइन मंचों पर पूछता हूँ या सोशल मीडिया पर खोजता हूँ।" },
+        score: 8,
+        insight: { en: "Risky. Scammers monitor social media to drop fake help numbers.", hi: "जोखिम भरा। स्कैमर्स फर्जी मदद नंबर देने के लिए सोशल मीडिया पर नजर रखते हैं।" },
+      },
+    ],
+  },
+  {
+    id: "sq-12",
+    question: {
+      en: "What is the best way to secure your Aadhaar details from biometric fraud?",
+      hi: "बायोमेट्रिक धोखाधड़ी से अपने आधार विवरण को सुरक्षित रखने का सबसे अच्छा तरीका क्या है?",
+    },
+    options: [
+      {
+        label: { en: "I lock my Aadhaar biometrics using mAadhaar or the UIDAI portal.", hi: "मैं mAadhaar या UIDAI पोर्टल से अपने आधार बायोमेट्रिक्स को लॉक रखता हूँ।" },
+        score: 20,
+        insight: { en: "Top-tier security. This blocks unauthorized Aadhaar-enabled payments (AePS).", hi: "सर्वोच्च सुरक्षा। यह अनधिकृत आधार-सक्षम भुगतान (AePS) को रोकता है।" },
+      },
+      {
+        label: { en: "I share my unmasked Aadhaar card copy with service providers.", hi: "मैं सेवा प्रदाताओं के साथ बिना मास्क की गई आधार कार्ड की प्रति साझा करता हूँ।" },
+        score: 6,
+        insight: { en: "Risky. Scammers can use unmasked Aadhaar scans to issue fraudulent SIMs.", hi: "जोखिम भरा। स्कैमर्स अनमास्क आधार का उपयोग फर्जी सिम जारी करने के लिए कर सकते हैं।" },
+      },
+      {
+        label: { en: "I do not use biometric locking as I trust the system.", hi: "मैं बायोमेट्रिक लॉक का उपयोग नहीं करता क्योंकि मुझे सिस्टम पर भरोसा है।" },
+        score: 10,
+        insight: { en: "Leaving biometrics unlocked by default leaves you exposed to AePS cloning scams.", hi: "बायोमेट्रिक्स अनलॉक छोड़ने से आप AePS क्लोनिंग स्कैम के प्रति संवेदनशील रहते हैं।" },
+      },
+    ],
+  },
+  {
+    id: "sq-13",
+    question: {
+      en: "You receive a QR code on WhatsApp from someone who wants to buy your item. They ask you to scan it to receive payment. What is your reaction?",
+      hi: "आपको व्हाट्सएप पर कोई QR कोड भेजकर कहता है कि भुगतान प्राप्त करने के लिए इसे स्कैन करें। आपकी क्या प्रतिक्रिया होगी?",
+    },
+    options: [
+      {
+        label: { en: "I refuse. Scanning QR codes is only for making payments, never receiving.", hi: "मैं मना करता हूँ। क्यूआर कोड केवल भुगतान करने के लिए होता है, प्राप्त करने के लिए नहीं।" },
+        score: 20,
+        insight: { en: "Excellent. Scammers exploit this misunderstanding to debit your account.", hi: "बहुत बढ़िया। स्कैमर्स इस गलतफहमी का फायदा उठाकर आपके खाते से पैसे निकाल लेते हैं।" },
+      },
+      {
+        label: { en: "I scan it to see if the money reflects in my account.", hi: "मैं यह देखने के लिए स्कैन करता हूँ कि पैसा खाते में आता है या नहीं।" },
+        score: 3,
+        insight: { en: "Critical error. Entering your PIN after scanning will immediately deduct funds.", hi: "गंभीर गलती। स्कैन करने के बाद पिन डालने से आपके खाते से पैसे कट जाएंगे।" },
+      },
+      {
+        label: { en: "I ask them to explain how it works first.", hi: "मैं उनसे पहले यह समझाने को कहता हूँ कि यह कैसे काम करता है।" },
+        score: 8,
+        insight: { en: "Risky. Scammers are trained to confuse you with technical jargon.", hi: "जोखिम भरा। स्कैमर्स तकनीकी शब्दावली से आपको भ्रमित करने में माहिर होते हैं।" },
+      },
+    ],
+  },
+  {
+    id: "sq-14",
+    question: {
+      en: "How do you protect your mobile SIM card from SIM swap attacks?",
+      hi: "आप अपने मोबाइल सिम कार्ड को सिम स्वैप हमलों से कैसे सुरक्षित रखते हैं?",
+    },
+    options: [
+      {
+        label: { en: "I set a SIM PIN and contact my operator if signals drop suddenly.", hi: "मैं सिम पिन सेट करता हूँ और सिग्नल गायब होने पर तुरंत ऑपरेटर से संपर्क करता हूँ।" },
+        score: 20,
+        insight: { en: "Perfect. Monitoring signal loss prevents scammers from hijacking OTPs.", hi: "सटीक। सिग्नल बंद होने की निगरानी करने से स्कैमर्स को ओटीपी हाईजैक करने से रोका जा सकता है।" },
+      },
+      {
+        label: { en: "I wait for a few days to see if the signal returns.", hi: "मैं कुछ दिनों तक इंतजार करता हूँ कि सिग्नल वापस आता है या नहीं।" },
+        score: 5,
+        insight: { en: "Dangerous. If your SIM is deactivated, scammers can access all your OTPs.", hi: "खतरनाक। यदि आपका सिम बंद हो गया है, तो स्कैमर्स आपके सभी ओटीपी तक पहुंच सकते हैं।" },
+      },
+      {
+        label: { en: "I do not set any PIN or password on my SIM card.", hi: "मैं अपने सिम कार्ड पर कोई पिन या पासवर्ड सेट नहीं करता हूँ।" },
+        score: 10,
+        insight: { en: "Standard risk. A SIM PIN adds a crucial layer of defense against physical theft and swaps.", hi: "सामान्य जोखिम। सिम पिन शारीरिक चोरी और स्वैप के खिलाफ सुरक्षा की एक महत्वपूर्ण परत है।" },
+      },
+    ],
+  },
+  {
+    id: "sq-15",
+    question: {
+      en: "What is your approach to system software updates on your device?",
+      hi: "आप अपने डिवाइस पर सिस्टम सॉफ्टवेयर अपडेट को लेकर क्या दृष्टिकोण अपनाते हैं?",
+    },
+    options: [
+      {
+        label: { en: "I install them immediately to patch security holes.", hi: "मैं सुरक्षा कमियों को दूर करने के लिए उन्हें तुरंत इंस्टॉल करता हूँ।" },
+        score: 20,
+        insight: { en: "Best practice. Software updates fix known security vulnerabilities.", hi: "सर्वोत्तम अभ्यास। सॉफ्टवेयर अपडेट ज्ञात सुरक्षा कमजोरियों को ठीक करते हैं।" },
+      },
+      {
+        label: { en: "I delay updates because they take up storage or data.", hi: "मैं अपडेट टाल देता हूँ क्योंकि वे स्टोरेज या डेटा खर्च करते हैं।" },
+        score: 10,
+        insight: { en: "Vulnerable. Outdated systems are easy targets for exploit kits.", hi: "असुरक्षित। पुराने सिस्टम हैकर्स के लिए आसान निशाना होते हैं।" },
+      },
+      {
+        label: { en: "I sideload security apps from third-party websites.", hi: "मैं थर्ड-पार्टी वेबसाइटों से सुरक्षा ऐप डाउनलोड करके इंस्टॉल करता हूँ।" },
+        score: 2,
+        insight: { en: "Extremely risky. Sideloaded APK files often contain hidden trojans or keyloggers.", hi: "अत्यधिक जोखिम भरा। अनधिकृत एपीके फाइलों में अक्सर छिपे हुए मैलवेयर होते हैं।" },
       },
     ],
   },

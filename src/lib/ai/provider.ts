@@ -18,9 +18,9 @@ function getOpenAiCandidates() {
   }
 
   const modelIds = unique([
-    process.env.OPENAI_MODEL || "gpt-4.1-mini",
-    "gpt-4.1-mini",
+    process.env.OPENAI_MODEL || "gpt-4o-mini",
     "gpt-4o-mini",
+    "gpt-4o",
   ]);
 
   return modelIds.map((modelId) => ({
@@ -38,7 +38,8 @@ function getGoogleCandidates() {
   const modelIds = unique([
     process.env.GOOGLE_MODEL || "gemini-2.5-flash",
     "gemini-2.5-flash",
-    "gemini-2.0-flash",
+    "gemini-3.5-flash",
+    "gemini-2.0-flash-lite",
   ]);
 
   return modelIds.map((modelId) => ({

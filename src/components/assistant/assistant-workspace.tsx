@@ -167,13 +167,6 @@ export function AssistantWorkspace() {
           updatedAt: new Date().toISOString(),
         }),
       );
-      setStatus(
-        data.source === "fallback"
-          ? data.reason
-            ? `Live AI unavailable (${data.reason}). Using safety guidance mode.`
-            : pick(sharedCopy.aiMissing)
-          : `Response generated via ${data.source}.`,
-      );
       await saveThread(updatedMessages);
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Unable to get assistant response.");
