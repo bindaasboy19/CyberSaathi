@@ -8,6 +8,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { formatRelativeDate } from "@/lib/utils";
+import {
+  fetchSupportQueries,
+  fetchAllReports,
+  fetchAllLegalCases,
+} from "@/lib/firebase/firestore";
 
 type SupportQuery = {
   id: string;
@@ -61,14 +66,17 @@ export function AdminView() {
     setError(null);
 
     try {
-      const response = await fetch(`/api/admin?userId=${user.uid}`);
-      const result = await response.json();
+      const [supportQueries, reports, legalCases] = await Promise.all([
+        fetchSupportQueries().catch(() => []),
+        fetchAllReports().catch(() => []),
+        fetchAllLegalCases().catch(() => []),
+      ]);
 
-      if (!response.ok) {
-        throw new Error(result.error || "Failed to load admin dashboard data.");
-      }
-
-      setData(result);
+      setData({
+        supportQueries,
+        reports,
+        legalCases,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "An unexpected error occurred.");
     } finally {

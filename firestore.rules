@@ -1,6 +1,6 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{database} {
+  match /databases/{database}/documents {
     function signedIn() {
       return request.auth != null;
     }
@@ -10,8 +10,8 @@ service cloud.firestore {
     }
 
     function currentRole() {
-      return signedIn() && exists(/databases/$(database)/users/$(request.auth.uid))
-        ? get(/databases/$(database)/users/$(request.auth.uid)).data.role
+      return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        ? get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role
         : null;
     }
 
@@ -117,22 +117,22 @@ service cloud.firestore {
 
     match /courses/{courseId} {
       allow read: if true;
-      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/courses/c-security-basics));
+      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/documents/courses/c-security-basics));
     }
 
     match /modules/{moduleId} {
       allow read: if true;
-      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/courses/c-security-basics));
+      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/documents/courses/c-security-basics));
     }
 
     match /lessons/{lessonId} {
       allow read: if true;
-      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/courses/c-security-basics));
+      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/documents/courses/c-security-basics));
     }
 
     match /quizzes/{quizId} {
       allow read: if true;
-      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/courses/c-security-basics));
+      allow write: if isAdmin() || (signedIn() && !exists(/databases/$(database)/documents/courses/c-security-basics));
     }
 
     match /user_progress/{progressId} {

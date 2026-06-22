@@ -13,6 +13,7 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   type User,
 } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
@@ -133,7 +134,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       unsubscribe = onAuthStateChanged(auth!, async (currentUser) => {
         if (!active) return;
-        setUser(currentUser);
 
         if (currentUser) {
           const nextProfile = available
@@ -146,12 +146,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 preferredLanguage: "en",
                 createdAt: new Date().toISOString(),
               } satisfies UserProfile;
-          if (active) setProfile(nextProfile);
+          if (active) {
+            setProfile(nextProfile);
+            setUser(currentUser);
+            setLoading(false);
+          }
         } else {
-          if (active) setProfile(null);
+          if (active) {
+            setProfile(null);
+            setUser(null);
+            setLoading(false);
+          }
         }
-
-        if (active) setLoading(false);
       });
     };
 
@@ -196,6 +202,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           payload.email,
           payload.password,
         );
+
+        await updateProfile(credentials.user, {
+          displayName: payload.name,
+        });
 
         const nextProfile: UserProfile = {
           uid: credentials.user.uid,
