@@ -97,12 +97,14 @@ service cloud.firestore {
 
     match /chat_history/{chatId} {
       allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
-      allow read, update, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow read: if signedIn() && (resource == null || resource.data.userId == request.auth.uid);
+      allow update, delete: if signedIn() && resource.data.userId == request.auth.uid;
     }
 
     match /reports/{reportId} {
       allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
-      allow read, update, delete: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow read: if isAdmin() || (signedIn() && (resource == null || resource.data.userId == request.auth.uid));
+      allow update, delete: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
     }
 
     match /legal_cases/{caseId} {
@@ -112,7 +114,8 @@ service cloud.firestore {
         && request.resource.data.description is string
         && request.resource.data.generatedReport is string
         && request.resource.data.status in ["draft", "submitted"];
-      allow read, update, delete: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
+      allow read: if isAdmin() || (signedIn() && (resource == null || resource.data.userId == request.auth.uid));
+      allow update, delete: if isAdmin() || (signedIn() && resource.data.userId == request.auth.uid);
     }
 
     match /courses/{courseId} {
@@ -137,7 +140,8 @@ service cloud.firestore {
 
     match /user_progress/{progressId} {
       allow create: if signedIn() && request.resource.data.userId == request.auth.uid;
-      allow read, update, delete: if signedIn() && resource.data.userId == request.auth.uid;
+      allow read: if signedIn() && (resource == null || resource.data.userId == request.auth.uid);
+      allow update, delete: if signedIn() && resource.data.userId == request.auth.uid;
     }
 
     match /news_articles/{articleId} {
