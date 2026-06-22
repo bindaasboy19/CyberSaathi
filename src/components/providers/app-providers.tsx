@@ -9,9 +9,9 @@ import { LanguageProvider } from "@/components/providers/language-provider";
 export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <LanguageProvider>
-        <AuthProvider>{children}</AuthProvider>
-      </LanguageProvider>
+      <AuthProvider>
+        <LanguageProvider>{children}</LanguageProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

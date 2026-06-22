@@ -17,16 +17,22 @@ import { assistantSuggestions } from "@/lib/data/content";
 import { fetchChatThreads, upsertChatThread } from "@/lib/firebase/firestore";
 import { sharedCopy } from "@/lib/i18n";
 import { createId, formatRelativeDate } from "@/lib/utils";
-import type { ChatMessage } from "@/types";
+import type { ChatMessage, Language } from "@/types";
 
-function buildWelcomeMessage(language: "en" | "hi"): ChatMessage {
+function buildWelcomeMessage(language: Language): ChatMessage {
+  const welcomeText: Record<Language, string> = {
+    en: "I’m CyberSaathi. Tell me what happened or what looks suspicious, and I’ll help you with prevention, containment, evidence, and reporting steps for India.",
+    hi: "मैं CyberSaathi हूँ। यदि आपको किसी संदिग्ध लिंक, UPI अनुरोध, OTP मांग, सोशल अकाउंट टेकओवर या पहचान धोखाधड़ी पर मदद चाहिए, तो स्थिति बताइए।",
+    bn: "আমি CyberSaathi। কী ঘটেছে বা কী সন্দেহজনক লাগছে তা আমাকে বলুন, এবং আমি আপনাকে ভারতে সাইবার অপরাধ প্রতিরোধ, নিয়ন্ত্রণ, প্রমাণ এবং অভিযোগ জানানোর পদক্ষেপগুলিতে সহায়তা করব।",
+    ta: "நான் CyberSaathi. என்ன நடந்தது அல்லது எது சந்தேகத்திற்குரியதாக இருக்கிறது என்று எனக்குச் சொல்லுங்கள், இந்தியாவில் தடுப்பு, கட்டுப்பாடு, சான்றுகள் மற்றும் புகார் அளிக்கும் படிகளுக்கு நான் உங்களுக்கு உதவுவேன்.",
+    te: "నేను CyberSaathi. ఏం జరిగిందో లేదా ఏది అనుమానాస్పదంగా ఉందో నాకు చెప్పండి, మరియు భారతదేశంలో నివారణ, నియంత్రణ, సాక్ష్యాధారాలు మరియు ఫిర్యాదు చేయడానికి నేను మీకు సహాయం చేస్తాను.",
+    mr: "मी CyberSaathi आहे. काय घडले किंवा काय संशयास्पद वाटते ते मला सांगा, आणि मी तुम्हाला प्रतिबंध, नियंत्रण, पुरावे आणि तक्रार करण्याच्या पायऱ्यांवर मदत करेन।"
+  };
+
   return {
     id: createId("message"),
     role: "assistant",
-    content:
-      language === "hi"
-        ? "मैं CyberSaathi हूँ। यदि आपको किसी संदिग्ध लिंक, UPI अनुरोध, OTP मांग, सोशल अकाउंट टेकओवर या पहचान धोखाधड़ी पर मदद चाहिए, तो स्थिति बताइए।"
-        : "I’m CyberSaathi. Tell me what happened or what looks suspicious, and I’ll help you with prevention, containment, evidence, and reporting steps for India.",
+    content: welcomeText[language] ?? welcomeText.en,
     createdAt: new Date().toISOString(),
   };
 }
@@ -135,6 +141,10 @@ export function AssistantWorkspace() {
         },
         body: JSON.stringify({
           message: userMessage.content,
+          history: messages.map((msg) => ({
+            role: msg.role,
+            content: msg.content,
+          })),
           language,
         }),
       });

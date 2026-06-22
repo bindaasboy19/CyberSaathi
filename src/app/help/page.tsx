@@ -156,7 +156,23 @@ export default function HelpPage() {
         message: formData.message,
       };
 
-      if (publicKey) {
+      // Persist the support query in Firebase via local API
+      try {
+        await fetch("/api/support", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.user_name,
+            email: formData.user_email,
+            category: formData.category,
+            message: formData.message,
+          }),
+        });
+      } catch (dbError) {
+        console.error("Firebase support query persistence failed:", dbError);
+      }
+
+      if (publicKey && serviceId && templateId) {
         await emailjs.send(
           serviceId,
           templateId,
@@ -166,7 +182,7 @@ export default function HelpPage() {
       } else {
         // Fallback simulation when keys are missing
         console.log("EmailJS keys missing. Simulated payload sending:", templateParams);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 800));
       }
 
       setSuccess(true);

@@ -270,10 +270,13 @@ export default function PortalsPage() {
     return portalsData.filter((portal) => {
       const matchesCategory = activeCategory === "all" || portal.category === activeCategory;
       const query = searchQuery.toLowerCase();
+      const nameText = (portal.name[language as keyof typeof portal.name] || portal.name.en).toLowerCase();
+      const descText = (portal.description[language as keyof typeof portal.description] || portal.description.en).toLowerCase();
+      const minText = (portal.ministry[language as keyof typeof portal.ministry] || portal.ministry.en).toLowerCase();
       const matchesSearch =
-        portal.name[language].toLowerCase().includes(query) ||
-        portal.description[language].toLowerCase().includes(query) ||
-        portal.ministry[language].toLowerCase().includes(query) ||
+        nameText.includes(query) ||
+        descText.includes(query) ||
+        minText.includes(query) ||
         portal.url.toLowerCase().includes(query);
       return matchesCategory && matchesSearch;
     });
@@ -370,15 +373,15 @@ export default function PortalsPage() {
                   </span>
                 </div>
                 <CardTitle className="mt-3 text-base font-bold leading-6 text-slate-900 dark:text-white">
-                  {portal.name[language]}
+                  {portal.name[language as keyof typeof portal.name] || portal.name.en}
                 </CardTitle>
                 <CardDescription className="text-[11px] font-semibold text-sky-600 dark:text-sky-400">
-                  {portal.ministry[language]}
+                  {portal.ministry[language as keyof typeof portal.ministry] || portal.ministry.en}
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col flex-1 p-5 pt-0">
                 <p className="text-xs leading-6 text-slate-600 dark:text-slate-300 flex-1">
-                  {portal.description[language]}
+                  {portal.description[language as keyof typeof portal.description] || portal.description.en}
                 </p>
 
                 {/* Key features checklist */}
@@ -387,7 +390,7 @@ export default function PortalsPage() {
                     {pick({ en: "Key Features & Services", hi: "मुख्य विशेषताएं और सेवाएं" })}
                   </p>
                   <ul className="mt-2 space-y-1.5 text-xs text-slate-700 dark:text-slate-200">
-                    {portal.features[language].map((feat, idx) => (
+                    {(portal.features[language as keyof typeof portal.features] || portal.features.en).map((feat, idx) => (
                       <li key={idx} className="flex gap-2 items-start">
                         <span className="text-sky-500 shrink-0 mt-0.5">•</span>
                         <span className="leading-5">{feat}</span>

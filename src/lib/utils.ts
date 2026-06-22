@@ -58,11 +58,13 @@ export function createId(prefix: string) {
   return `${prefix}-${randomHex}`;
 }
 
-export function pickText<T extends { en: string; hi: string }>(
-  value: T,
-  language: "en" | "hi",
+import type { Language, LocalizedString } from "@/types";
+
+export function pickText(
+  value: LocalizedString,
+  language: Language,
 ) {
-  return value[language];
+  return value[language] ?? value.en;
 }
 
 export function sanitizeText(value: string) {

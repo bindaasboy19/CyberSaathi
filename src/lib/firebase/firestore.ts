@@ -682,3 +682,67 @@ export async function seedLearningHub() {
     await setDoc(doc(firestore, "quizzes", quiz.id), quiz);
   }
 }
+
+export async function createSupportQuery(queryData: {
+  name: string;
+  email: string;
+  category: string;
+  message: string;
+}) {
+  const firestore = ensureDb();
+  const document = await addDoc(collection(firestore, "support_queries"), {
+    ...queryData,
+    createdAt: serverTimestamp(),
+  });
+  return document.id;
+}
+
+export async function fetchSupportQueries() {
+  const firestore = ensureDb();
+  const snapshot = await getDocs(
+    query(collection(firestore, "support_queries"), orderBy("createdAt", "desc"), limit(100))
+  );
+  return snapshot.docs.map((document) => ({
+    id: document.id,
+    name: document.data().name || "",
+    email: document.data().email || "",
+    category: document.data().category || "",
+    message: document.data().message || "",
+    createdAt: toDateString(document.data().createdAt),
+  }));
+}
+
+export async function fetchAllReports() {
+  const firestore = ensureDb();
+  const snapshot = await getDocs(
+    query(collection(firestore, "reports"), orderBy("createdAt", "desc"), limit(100))
+  );
+  return snapshot.docs.map<ScamReport>((document) => ({
+    id: document.id,
+    userId: document.data().userId,
+    type: document.data().type,
+    description: document.data().description,
+    amountLost: document.data().amountLost,
+    contactMethod: document.data().contactMethod,
+    location: document.data().location,
+    evidenceLink: document.data().evidenceLink,
+    status: document.data().status ?? "pending",
+    createdAt: toDateString(document.data().createdAt),
+  }));
+}
+
+export async function fetchAllLegalCases() {
+  const firestore = ensureDb();
+  const snapshot = await getDocs(
+    query(collection(firestore, "legal_cases"), orderBy("createdAt", "desc"), limit(100))
+  );
+  return snapshot.docs.map<LegalCase>((document) => ({
+    id: document.id,
+    userId: document.data().userId,
+    problemType: document.data().problemType,
+    description: document.data().description,
+    generatedReport: document.data().generatedReport,
+    status: document.data().status ?? "draft",
+    createdAt: toDateString(document.data().createdAt),
+  }));
+}

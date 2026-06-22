@@ -73,7 +73,7 @@ function riskLevel(score: number): RiskLevel {
 }
 
 function recommendedActions(level: RiskLevel, language: Language) {
-  const actions = {
+  const languageActions = {
     en: {
       base: [
         "Do not click links, call back, or approve requests from the message.",
@@ -104,7 +104,69 @@ function recommendedActions(level: RiskLevel, language: Language) {
         "पेमेंट साधनों को फ्रीज करवाएं और cybercrime.gov.in पर शिकायत दर्ज करें।",
       ],
     },
-  }[language];
+    bn: {
+      base: [
+        "লিংকে क्लिक করবেন না, কল ব্যাক করবেন না বা কোনো অনুরোধ অনুমোদন করবেন না।",
+        "আপনি ইতিমধ্যেই বিশ্বাস করেন এমন অফিসিয়াল অ্যাপ বা ওয়েবসাইটের ভেতরে সমস্যাটি যাচাই করুন।",
+        "মেসেজ, প্রেরক এবং যেকোনো লিঙ্ক করা অ্যাকাউন্টের বিবরণ প্রমাণ হিসেবে সংরক্ষণ করুন।",
+      ],
+      medium: [
+        "আপনি यदि এটিতে ইন্টারঅ্যাক্ট করে থাকেন তবে প্রভাবিত পাসওয়ার্ড পরিবর্তন করুন आणि সেশনগুলি সাইন আউট করুন।",
+        "অফিসিয়াল চ্যানেলের মাধ্যমে আপনার ব্যাঙ্ক, ওয়ালেট বা প্ল্যাটফর্ম সমর্থনকে সতর্ক করুন।",
+      ],
+      high: [
+        "অর্থ বা অ্যাকাউন্ট অ্যাক্সেস ঝুঁকিতে থাকলে অবিলম্বে 1930 নম্বरे কল করুন।",
+        "পেমেন্ট মাধ্যমগুলি ব্লক করুন এবং cybercrime.gov.in-এ একটি অভিযোগ দায়ের করুন।",
+      ],
+    },
+    ta: {
+      base: [
+        "இணைப்புகளைக் கிளிக் செய்ய வேண்டாம், திரும்ப அழைக்க வேண்டாம் அல்லது கோரிக்கைகளை அங்கீகரிக்க வேண்டாம்.",
+        "நீங்கள் ஏற்கனவே நம்பும் அதிகாரப்பூர்வ பயன்பாடு அல்லது இணையதளத்தில் சிக்கலைச் சரிபார்க்கவும்.",
+        "செய்தி, அனுப்புநர் மற்றும் இணைக்கப்பட்ட கணக்கு விவரங்களை ஆதாரமாகச் சேமிக்கவும்.",
+      ],
+      medium: [
+        "கடவுச்சொல்லை மாற்றி, பிற சாதனங்களிலிருந்து வெளியேறவும்.",
+        "அதிகாரப்பூர்வ சேனல்கள் மூலம் உங்கள் வங்கி அல்லது வாலட் ஆதரவைத் தொடர்பு கொள்ளவும்.",
+      ],
+      high: [
+        "பணம் அல்லது கணக்கு ஆபத்தில் இருந்தால் உடனடியாக 1930 ஐ அழைக்கவும்.",
+        "கணக்கை முடக்கி, cybercrime.gov.in இல் புகார் செய்யவும்.",
+      ],
+    },
+    te: {
+      base: [
+        "లింక్‌లను క్లిక్ చేయవద్దు, కాల్ బ్యాక్ చేయవద్దు లేదా అభ్యర్థనలను ఆమోదించవద్దు.",
+        "అధికారిక యాప్ లేదా వెబ్‌సైట్‌లో సమస్యను ధృవీకరించండి.",
+        "మెసేజ్, పంపినవారి వివరాలు మరియు లింక్ చేయబడిన ఖాతా వివరాలను ఆధారాలుగా సేవ్ చేయండి.",
+      ],
+      medium: [
+        "పాస్‌వర్డ్‌ను మార్చండి మరియు ఇతర పరికరాల నుండి లాగౌట్ చేయండి.",
+        "అధికారిక ఛానెల్‌ల ద్వారా మీ బ్యాంక్ లేదా వాలెట్ సపోర్ట్‌ను సంसंప్రదించండి.",
+      ],
+      high: [
+        "డబ్బు లేదా ఖాతా ప్రమాదంలో ఉంటే వెంటనే 1930 కి కాల్ చేయండి.",
+        "ఖాతాను బ్లాక్ చేయండి మరియు cybercrime.gov.in లో ఫిర్యాदु చేయండి.",
+      ],
+    },
+    mr: {
+      base: [
+        "लिंक्सवर क्लिक करू नका, कॉल बॅक करू नका किंवा विनंत्या मंजूर करू नका.",
+        "अधिकृत ॲप किंवा वेबसाइटवर समस्येची पडताळणी करा.",
+        "पुरावा म्हणून संदेश, पाठवणारा आणि लिंक्ड खाते तपशील जतन करा.",
+      ],
+      medium: [
+        "पासवर्ड बदला आणि इतर उपकरणांमधून लॉगआउट करा.",
+        "अधिकृत चॅनेलद्वारे आपल्या बँक किंवा वॉलेट सपोर्टला कळवा.",
+      ],
+      high: [
+        "पैसे किंवा खाते धोक्यात असल्यास त्वरित 1930 वर कॉल करा.",
+        "खाते ब्लॉक करा आणि cybercrime.gov.in वर तक्रार नोंदवा.",
+      ],
+    },
+  };
+
+  const actions = languageActions[language] ?? languageActions.en;
 
   if (level === "High") {
     return [...actions.base, ...actions.medium, ...actions.high];
@@ -124,17 +186,24 @@ export function analyzeScamContent(content: string, language: Language): ScamAna
     matched.reduce((total, signal) => total + signal.weight, 8),
   );
   const level = riskLevel(score);
+  const matchedLabels = matched.map((signal) => (signal.message as Record<string, string | undefined>)[language] ?? signal.message.en);
+  
   const explanation =
     matched.length > 0
-      ? matched.map((signal) => signal.message[language]).join(" ")
-      : language === "hi"
-        ? "स्पष्ट स्कैम संकेत सीमित हैं, लेकिन अज्ञात संदेशों पर सावधानी रखना जरूरी है।"
-        : "Clear scam indicators are limited, but unknown messages still deserve caution.";
+      ? matchedLabels.join(" ")
+      : (({
+          en: "Clear scam indicators are limited, but unknown messages still deserve caution.",
+          hi: "स्पष्ट स्कैम संकेत सीमित हैं, लेकिन अज्ञात संदेशों पर सावधानी रखना जरूरी है।",
+          bn: "স্পষ্ট স্ক্যামের লক্ষণগুলি সীমিত, তবে অজানা বার্তাগুলির ক্ষেত্রে সতর্ক থাকা উচিত।",
+          ta: "தெளிவான மோசடி குறிகாட்டிகள் குறைவாக உள்ளன, இருப்பினும் அறியப்படாத செய்திகள் எச்சரிக்கைக்கு தகுதியானவை.",
+          te: "స్పష్టమైన స్కామ్ సంకేతాలు పరిమితంగా ఉన్నాయి, అయినప్పటికీ తెలియని సందేశాలపై జాగ్రत्ता వహించడం అవసరం.",
+          mr: "स्पष्ट स्कॅमचे संकेत मर्यादित आहेत, तरीही अज्ञात संदेशांबाबत खबरदारी घेणे आवश्यक आहे।"
+        } as Record<string, string>)[language] ?? "Clear scam indicators are limited, but unknown messages still deserve caution.");
 
   return {
     probability: score,
     riskLevel: level,
-    matchedSignals: matched.map((signal) => signal.message[language]),
+    matchedSignals: matchedLabels,
     explanation,
     recommendedActions: recommendedActions(level, language),
   };

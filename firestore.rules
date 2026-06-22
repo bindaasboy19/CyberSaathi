@@ -143,5 +143,15 @@ service cloud.firestore {
     match /news_articles/{articleId} {
       allow read, write: if true;
     }
+
+    match /support_queries/{queryId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /scam_alerts/{alertId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
   }
 }

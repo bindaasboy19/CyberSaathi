@@ -1,4 +1,4 @@
-export type Language = "en" | "hi";
+export type Language = "en" | "hi" | "bn" | "ta" | "te" | "mr";
 export type UserRole = "user" | "expert" | "admin";
 export type MessageRole = "user" | "assistant";
 export type PostType = "blog" | "case";
@@ -9,6 +9,10 @@ export type LegalCaseStatus = "draft" | "submitted";
 export type LocalizedString = {
   en: string;
   hi: string;
+  bn?: string;
+  ta?: string;
+  te?: string;
+  mr?: string;
 };
 
 export type UserProfile = {

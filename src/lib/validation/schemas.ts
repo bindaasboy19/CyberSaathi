@@ -23,7 +23,15 @@ export const assistantInputSchema = z.object({
     .string()
     .transform(clean)
     .pipe(z.string().min(4, "Tell the assistant a little more.").max(1500)),
-  language: z.enum(["en", "hi"]).default("en"),
+  history: z
+    .array(
+      z.object({
+        role: z.enum(["user", "assistant"]),
+        content: z.string(),
+      })
+    )
+    .optional(),
+  language: z.enum(["en", "hi", "bn", "ta", "te", "mr"]).default("en"),
 });
 
 export const analyzerSchema = z.object({
@@ -31,7 +39,7 @@ export const analyzerSchema = z.object({
     .string()
     .transform(clean)
     .pipe(z.string().min(6, "Paste the suspicious text, email, or URL.").max(2500)),
-  language: z.enum(["en", "hi"]).default("en"),
+  language: z.enum(["en", "hi", "bn", "ta", "te", "mr"]).default("en"),
 });
 
 export const legalAssistantSchema = z.object({
@@ -46,7 +54,7 @@ export const legalAssistantSchema = z.object({
   platform: z.string().transform(clean).optional(),
   evidenceNotes: z.string().transform(clean).optional(),
   mode: z.enum(["chat", "draft"]).default("chat"),
-  language: z.enum(["en", "hi"]).default("en"),
+  language: z.enum(["en", "hi", "bn", "ta", "te", "mr"]).default("en"),
 });
 
 export const legalCaseSchema = z.object({

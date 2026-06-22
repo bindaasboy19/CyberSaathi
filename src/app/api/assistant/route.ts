@@ -35,7 +35,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { language, message } = parsed.data;
+  const { language, message, history } = parsed.data;
   const candidates = getAiModelCandidates().slice(0, 3);
 
   if (!candidates.length) {
@@ -50,11 +50,19 @@ export async function POST(request: Request) {
 
   for (const candidate of candidates) {
     try {
+      const messages = [
+        ...(history ?? []).map((msg) => ({
+          role: msg.role as "user" | "assistant",
+          content: msg.content,
+        })),
+        { role: "user" as const, content: message },
+      ];
+
       const { text } = await withTimeout(
         generateText({
           model: candidate.model,
           system: getAssistantSystemPrompt(language),
-          prompt: message,
+          messages,
         }),
         25000,
       );

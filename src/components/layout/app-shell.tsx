@@ -57,6 +57,21 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#f4f7fb] dark:bg-[#040813] tech-dot-grid">
+      {/* Emergency Helpline Banner */}
+      <div className="bg-gradient-to-r from-rose-600 via-red-600 to-amber-600 text-white py-2 px-4 text-center text-[11px] sm:text-xs font-extrabold tracking-wide relative z-50 flex items-center justify-center gap-2 shadow-md animate-pulse">
+        <span className="flex h-2 w-2 rounded-full bg-white animate-ping" />
+        <span>
+          {pick({
+            en: "🚨 Faced Financial Fraud? Call national helpline 1930 immediately to freeze stolen funds.",
+            hi: "🚨 वित्तीय धोखाधड़ी का शिकार हुए? चोरी हुआ धन फ्रीज कराने के लिए तुरंत 1930 पर कॉल करें।",
+            bn: "🚨 আর্থিক জালিয়াতির শিকার? চুরি যাওয়া টাকা ফ্রিজ করতে অবিলম্বে জাতীয় হেল্পলাইন 1930 কল করুন।",
+            ta: "🚨 நிதி மோசடிக்கு ஆளானீர்களா? திருடப்பட்ட நிதியை முடக்க உடனடியாக உதவி எண் 1930 ஐ அழைக்கவும்.",
+            te: "🚨 ఆర్థిక మోసానికి గురయ్యారా? దొంగిలించబడిన డబ్బును ఫ్రీజ్ చేయడానికి వెంటనే హెల్ప్‌లైన్ 1930 కి కాల్ చేయండి.",
+            mr: "🚨 आर्थिक फसवणूक झाली आहे? चोरीला गेलेले पैसे गोठवण्यासाठी लगेच हेल्पलाइन १९३० वर कॉल करा."
+          })}
+        </span>
+      </div>
+
       {/* Floating Animated Orbs in the Background */}
       <div className="absolute top-10 left-10 h-72 w-72 rounded-full bg-sky-500/10 blur-3xl animate-float-1 pointer-events-none" />
       <div className="absolute bottom-10 right-10 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl animate-float-2 pointer-events-none" />
