@@ -59,6 +59,7 @@ export function LegalAIWorkspace() {
   const { language } = useLanguage();
   const { user, configured } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>("chat");
+  const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     description: "",
     incidentDate: "",
@@ -329,80 +330,199 @@ export function LegalAIWorkspace() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[390px_minmax(0,1fr)]">
-        <Card>
-          <CardHeader>
-            <CardTitle>Incident details</CardTitle>
-            <CardDescription>
-              Add what you know. Unknown fields can stay blank and the assistant will ask follow-up questions.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Textarea
-              className="min-h-36"
-              onChange={(event) =>
-                setForm((current) => ({ ...current, description: event.target.value }))
-              }
-              placeholder="Example: I got scammed via UPI after approving a collect request from a fake buyer."
-              value={form.description}
-            />
-            <Input
-              onChange={(event) =>
-                setForm((current) => ({ ...current, incidentDate: event.target.value }))
-              }
-              placeholder="Date/time of incident"
-              value={form.incidentDate}
-            />
-            <Input
-              onChange={(event) =>
-                setForm((current) => ({ ...current, amountLost: event.target.value }))
-              }
-              placeholder="Amount lost, if any"
-              value={form.amountLost}
-            />
-            <Input
-              onChange={(event) =>
-                setForm((current) => ({ ...current, transactionDetails: event.target.value }))
-              }
-              placeholder="UTR, transaction ID, account, or wallet reference"
-              value={form.transactionDetails}
-            />
-            <Input
-              onChange={(event) =>
-                setForm((current) => ({ ...current, platform: event.target.value }))
-              }
-              placeholder="Platform/app involved"
-              value={form.platform}
-            />
-            <Input
-              onChange={(event) =>
-                setForm((current) => ({ ...current, contactMethod: event.target.value }))
-              }
-              placeholder="How the suspect contacted you"
-              value={form.contactMethod}
-            />
-            <Textarea
-              onChange={(event) =>
-                setForm((current) => ({ ...current, evidenceNotes: event.target.value }))
-              }
-              placeholder="Evidence notes: screenshots, call logs, bank emails, support ticket IDs..."
-              value={form.evidenceNotes}
-            />
-            <div className="grid gap-3 sm:grid-cols-2">
-              <Button disabled={loading} onClick={() => void generateGuidance("chat")}>
-                {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
-                Ask Legal AI
-              </Button>
-              <Button
-                disabled={loading}
-                onClick={() => void generateGuidance("draft")}
-                variant="secondary"
-              >
-                <FileText className="h-4 w-4" />
-                Draft complaint
-              </Button>
+        <Card className="flex flex-col border border-slate-200/80 bg-white/50 dark:border-slate-800/80 dark:bg-slate-950/40 shadow-xl backdrop-blur-md">
+          <CardHeader className="pb-3 border-b border-slate-200/60 dark:border-slate-800/60">
+            <div className="flex items-center justify-between gap-3">
+              <CardTitle className="text-base font-bold">Incident Intake Wizard</CardTitle>
+              <Badge variant="accent">Step {step} of 5</Badge>
             </div>
-            {error ? <p className="text-sm text-rose-500">{error}</p> : null}
-            {notice ? <p className="text-sm text-emerald-600 dark:text-emerald-300">{notice}</p> : null}
+            
+            {/* Timeline Progress Bar */}
+            <div className="mt-3 flex gap-1">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <div
+                  key={s}
+                  className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                    s <= step ? "bg-sky-500" : "bg-slate-200 dark:bg-slate-800"
+                  }`}
+                />
+              ))}
+            </div>
+          </CardHeader>
+          
+          <CardContent className="space-y-4 pt-5">
+            {step === 1 && (
+              <div className="space-y-3 animate-in fade-in duration-205">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step 1: Describe the incident *
+                </label>
+                <Textarea
+                  className="min-h-40"
+                  onChange={(event) =>
+                    setForm((current) => ({ ...current, description: event.target.value }))
+                  }
+                  placeholder="Example: I received a call claiming to be from FedEx courier. They told me a parcel in my name contained illegal items and threatened me with digital arrest..."
+                  value={form.description}
+                />
+                <p className="text-[11px] text-slate-400">
+                  Be as detailed as possible. Start from how you were first contacted and what the suspect told you.
+                </p>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="space-y-3 animate-in fade-in duration-205">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step 2: Core Variables
+                </label>
+                <div className="space-y-2">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400">Date & Time of Incident</label>
+                    <Input
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, incidentDate: event.target.value }))
+                      }
+                      placeholder="e.g., 2026-06-28 14:30"
+                      value={form.incidentDate}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400">Platform/App Involved</label>
+                    <Input
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, platform: event.target.value }))
+                      }
+                      placeholder="e.g., WhatsApp, Telegram, GPay"
+                      value={form.platform}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400">Amount Lost (INR), if any</label>
+                    <Input
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, amountLost: event.target.value }))
+                      }
+                      placeholder="e.g., ₹50,000"
+                      value={form.amountLost}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {step === 3 && (
+              <div className="space-y-3 animate-in fade-in duration-205">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step 3: Suspect Metadata & technical details
+                </label>
+                <div className="space-y-2">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400">How did they contact you?</label>
+                    <Input
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, contactMethod: event.target.value }))
+                      }
+                      placeholder="e.g., SMS, Voice Call, Instagram Direct Message"
+                      value={form.contactMethod}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-400">UTR / Transaction IDs / Account Numbers</label>
+                    <Input
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, transactionDetails: event.target.value }))
+                      }
+                      placeholder="UTR number, Suspect UPI ID, Bank Name"
+                      value={form.transactionDetails}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {step === 4 && (
+              <div className="space-y-3 animate-in fade-in duration-205">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step 4: Evidence & Notes
+                </label>
+                <Textarea
+                  className="min-h-36"
+                  onChange={(event) =>
+                    setForm((current) => ({ ...current, evidenceNotes: event.target.value }))
+                  }
+                  placeholder="Describe evidence: Screenshots of chats, bank SMS alerts, caller ID logs..."
+                  value={form.evidenceNotes}
+                />
+                <p className="text-[11px] text-slate-400">
+                  Briefly mention what screenshots or files you have saved. These are critical for the evidence checklist.
+                </p>
+              </div>
+            )}
+
+            {step === 5 && (
+              <div className="space-y-3 animate-in fade-in duration-205">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                  Step 5: Review & Submit
+                </label>
+                <div className="space-y-2 rounded-2xl bg-slate-105/50 p-4 dark:bg-slate-950/20 text-xs leading-5 border border-slate-200/55 dark:border-slate-800/60 max-h-80 overflow-y-auto">
+                  <p><strong>Description:</strong> {form.description || "N/A"}</p>
+                  <p><strong>Incident Date:</strong> {form.incidentDate || "N/A"}</p>
+                  <p><strong>Platform:</strong> {form.platform || "N/A"}</p>
+                  <p><strong>Amount Lost:</strong> {form.amountLost || "N/A"}</p>
+                  <p><strong>Contact Method:</strong> {form.contactMethod || "N/A"}</p>
+                  <p><strong>Technical/UTR Details:</strong> {form.transactionDetails || "N/A"}</p>
+                  <p><strong>Evidence Notes:</strong> {form.evidenceNotes || "N/A"}</p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2 pt-2">
+                  <Button disabled={loading} onClick={() => void generateGuidance("chat")}>
+                    {loading ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                    Ask Legal AI
+                  </Button>
+                  <Button
+                    disabled={loading}
+                    onClick={() => void generateGuidance("draft")}
+                    variant="secondary"
+                  >
+                    <FileText className="h-4 w-4" />
+                    Draft complaint
+                  </Button>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation Controls */}
+            <div className="flex justify-between border-t border-slate-150 dark:border-slate-850 pt-4 mt-2">
+              <Button
+                disabled={step === 1 || loading}
+                onClick={() => setStep((s) => s - 1)}
+                variant="secondary"
+                size="sm"
+                className="rounded-xl text-xs"
+              >
+                Back
+              </Button>
+              
+              {step < 5 ? (
+                <Button
+                  onClick={() => {
+                    if (step === 1 && !form.description.trim()) {
+                      setError("Describe the incident before continuing.");
+                      return;
+                    }
+                    setError(null);
+                    setStep((s) => s + 1);
+                  }}
+                  size="sm"
+                  className="rounded-xl text-xs"
+                >
+                  Continue
+                </Button>
+              ) : null}
+            </div>
+
+            {error ? <p className="text-xs text-rose-500 font-semibold">{error}</p> : null}
+            {notice ? <p className="text-xs text-emerald-600 dark:text-emerald-300 font-semibold">{notice}</p> : null}
           </CardContent>
         </Card>
 

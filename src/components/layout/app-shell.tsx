@@ -22,6 +22,9 @@ import {
 import { Topbar } from "@/components/layout/topbar";
 import { SidebarNav } from "@/components/layout/sidebar-nav";
 import { useLanguage } from "@/components/providers/language-provider";
+import { useAuth } from "@/components/providers/auth-provider";
+import LandingNavbar from "@/components/landing/landing-navbar";
+import LandingFooter from "@/components/landing/landing-footer";
 import { cn } from "@/lib/utils";
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -54,6 +57,53 @@ export function AppShell({ children }: { children: ReactNode }) {
   const handleMoreToggle = () => {
     setShowMoreMenu((prev) => !prev);
   };
+
+  const { user, loading } = useAuth();
+
+  const isAuthPath = ["/login", "/register"].includes(pathname);
+  
+  const isMarketingLayout = (!user && pathname === "/") || [
+    "/about",
+    "/technology",
+    "/trust",
+    "/roadmap",
+    "/faq",
+    "/contact",
+    "/legal/privacy",
+    "/legal/terms",
+    "/legal/cookies"
+  ].includes(pathname);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-mono text-xs md:text-sm">
+        <div className="flex flex-col items-center gap-3">
+          <span className="w-5 h-5 rounded-full border-2 border-slate-500 border-t-white animate-spin" />
+          <span className="animate-pulse uppercase tracking-widest text-[10px]">Loading CyberSaathi Core...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAuthPath) {
+    return (
+      <div className="min-h-screen w-full flex items-center justify-center bg-[#f4f7fb] dark:bg-[#040813] tech-dot-grid px-4 py-8 relative">
+        {children}
+      </div>
+    );
+  }
+
+  if (isMarketingLayout) {
+    return (
+      <div className="relative min-h-screen w-full bg-[#030303] text-white flex flex-col overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200">
+        <LandingNavbar />
+        <main className="flex-1 relative z-10 w-full">
+          {children}
+        </main>
+        <LandingFooter />
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#f4f7fb] dark:bg-[#040813] tech-dot-grid">

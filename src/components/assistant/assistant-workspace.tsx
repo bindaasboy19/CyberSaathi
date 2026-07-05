@@ -2,6 +2,7 @@
 
 import { Bot, LoaderCircle, Save, Send, ShieldCheck, Sparkles } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 
 import { useAuth } from "@/components/providers/auth-provider";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -21,12 +22,12 @@ import type { ChatMessage, Language } from "@/types";
 
 function buildWelcomeMessage(language: Language): ChatMessage {
   const welcomeText: Record<Language, string> = {
-    en: "I’m CyberSaathi. Tell me what happened or what looks suspicious, and I’ll help you with prevention, containment, evidence, and reporting steps for India.",
-    hi: "मैं CyberSaathi हूँ। यदि आपको किसी संदिग्ध लिंक, UPI अनुरोध, OTP मांग, सोशल अकाउंट टेकओवर या पहचान धोखाधड़ी पर मदद चाहिए, तो स्थिति बताइए।",
-    bn: "আমি CyberSaathi। কী ঘটেছে বা কী সন্দেহজনক লাগছে তা আমাকে বলুন, এবং আমি আপনাকে ভারতে সাইবার অপরাধ প্রতিরোধ, নিয়ন্ত্রণ, প্রমাণ এবং অভিযোগ জানানোর পদক্ষেপগুলিতে সহায়তা করব।",
-    ta: "நான் CyberSaathi. என்ன நடந்தது அல்லது எது சந்தேகத்திற்குரியதாக இருக்கிறது என்று எனக்குச் சொல்லுங்கள், இந்தியாவில் தடுப்பு, கட்டுப்பாடு, சான்றுகள் மற்றும் புகார் அளிக்கும் படிகளுக்கு நான் உங்களுக்கு உதவுவேன்.",
-    te: "నేను CyberSaathi. ఏం జరిగిందో లేదా ఏది అనుమానాస్పదంగా ఉందో నాకు చెప్పండి, మరియు భారతదేశంలో నివారణ, నియంత్రణ, సాక్ష్యాధారాలు మరియు ఫిర్యాదు చేయడానికి నేను మీకు సహాయం చేస్తాను.",
-    mr: "मी CyberSaathi आहे. काय घडले किंवा काय संशयास्पद वाटते ते मला सांगा, आणि मी तुम्हाला प्रतिबंध, नियंत्रण, पुरावे आणि तक्रार करण्याच्या पायऱ्यांवर मदत करेन।"
+    en: "Namaste! I am Saathi AI, your digital cyber safety companion. Tell me what happened or what looks suspicious, and I'll help you with containment, evidence collection, BNS 2023 legal guidance, and Indian reporting channels (1930 & cybercrime.gov.in).",
+    hi: "नमस्ते! मैं Saathi AI हूँ, आपका डिजिटल साइबर सुरक्षा साथी। मुझे बताइए कि क्या हुआ या क्या संदिग्ध लग रहा है, और मैं आपको नुकसान नियंत्रण, साक्ष्य संग्रह, BNS 2023 कानूनी मार्गदर्शन और भारतीय रिपोर्टिंग चैनलों (1930 और cybercrime.gov.in) में मदद करूँगा।",
+    bn: "নমস্কার! আমি Saathi AI, আপনার ডিজিটাল সাইবার নিরাপত্তা সহযোগী। কী ঘটেছে বা কী সন্দেহজনক লাগছে তা আমাকে বলুন, এবং আমি আপনাকে ভারতে সাইবার অপরাধ প্রতিরোধ, নিয়ন্ত্রণ, প্রমাণ এবং অভিযোগ জানানোর পদক্ষেপগুলিতে সহায়তা করব।",
+    ta: "வணக்கம்! நான் Saathi AI, உங்கள் டிஜிட்டல் இணைய பாதுகாப்பு உதவியாளர். என்ன நடந்தது அல்லது எது சந்தேகத்திற்குரியதாக இருக்கிறது என்று எனக்குச் சொல்லுங்கள், இந்தியாவில் தடுப்பு, கட்டுப்பாடு, சான்றுகள் மற்றும் புகார் அளிக்கும் படிகளுக்கு நான் உங்களுக்கு உதவுவேன்.",
+    te: "నమస్తే! నేను Saathi AI, మీ డిజటల్ సైబర్ భద్రతా సహాయకుడు. ఏం జరిగిందో లేదా ఏది అనుమానాస్పదంగా ఉందో నాకు చెప్పండి, మరియు భారతదేశంలో నివారణ, నియంత్రణ, సాక్ష్యాధారాలు మరియు ఫిర్యాదు చేయడానికి నేను మీకు సహాయం చేస్తాను.",
+    mr: "नमस्ते! मी Saathi AI आहे, तुमचा डिजिटल सायबर सुरक्षा सहाय्यक. काय घडले किंवा काय संशयास्पद वाटते ते मला सांगा, आणि मी तुम्हाला प्रतिबंध, नियंत्रण, पुरावे आणि तक्रार करण्याच्या पायऱ्यांवर मदत करेन।"
   };
 
   return {
@@ -83,6 +84,21 @@ export function AssistantWorkspace() {
     void loadThreads();
   }, [configured, user]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("query") || params.get("analyze");
+      if (query && query.trim()) {
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
+        // Delay slightly to allow initialization to finish
+        setTimeout(() => {
+          void handleSend(query);
+        }, 100);
+      }
+    }
+  }, []);
+
   const recentLabel = useMemo(
     () => assistantSuggestions.map((item) => pick(item)),
     [pick],
@@ -115,15 +131,16 @@ export function AssistantWorkspace() {
     }
   }
 
-  async function handleSend() {
-    if (!input.trim()) {
+  async function handleSend(forcedInput?: string) {
+    const textToSend = (forcedInput || input).trim();
+    if (!textToSend) {
       return;
     }
 
     const userMessage: ChatMessage = {
       id: createId("message"),
       role: "user",
-      content: input.trim(),
+      content: textToSend,
       createdAt: new Date().toISOString(),
     };
 
@@ -185,12 +202,57 @@ export function AssistantWorkspace() {
     }
   }
 
+  const renderMessageContent = (message: ChatMessage) => {
+    if (message.role === "user") {
+      return <p className="whitespace-pre-wrap">{message.content}</p>;
+    }
+
+    const content = message.content;
+    const lowerContent = content.toLowerCase();
+
+    // Contextual triggers
+    const isFinancial = lowerContent.includes("upi") || lowerContent.includes("money") || lowerContent.includes("bank") || lowerContent.includes("fraud") || lowerContent.includes("scam") || lowerContent.includes("₹");
+    const isLegal = lowerContent.includes("complaint") || lowerContent.includes("police") || lowerContent.includes("fir") || lowerContent.includes("bns") || lowerContent.includes("act");
+
+    return (
+      <div className="space-y-3 font-sans">
+        <p className="whitespace-pre-wrap leading-relaxed text-slate-800 dark:text-slate-100">{content}</p>
+        
+        {isFinancial && (
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-900 dark:text-amber-250 flex items-start gap-2.5 max-w-lg mt-3 shadow-sm animate-in fade-in duration-200">
+            <span className="text-amber-500 font-bold shrink-0 mt-0.5">⚠️ Ecosystem Tip:</span>
+            <div className="space-y-2">
+              <p className="leading-relaxed">For immediate UPI or bank account freezing, dial the National Cyber Crime Helpline <strong className="text-red-650 dark:text-red-400 font-extrabold text-sm">1930</strong> instantly. You can also generate a custom complaint draft in our Legal workspace.</p>
+              <div className="flex gap-3">
+                <Link href={`/legal?description=${encodeURIComponent(content)}&problemType=financial`} className="text-sky-650 dark:text-sky-400 font-bold hover:underline">
+                  Draft Complaint in Legal AI →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!isFinancial && isLegal && (
+          <div className="p-3.5 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-xs text-slate-800 dark:text-sky-200 flex items-start gap-2.5 max-w-lg mt-3 shadow-sm animate-in fade-in duration-200">
+            <span className="text-sky-550 font-bold shrink-0 mt-0.5">⚖️ Legal Link:</span>
+            <div className="space-y-2">
+              <p className="leading-relaxed">Build a fully structured petition using our specialized step-by-step Legal Assistant wizard.</p>
+              <Link href={`/legal?description=${encodeURIComponent(content)}`} className="text-sky-650 dark:text-sky-400 font-bold hover:underline">
+                Open Legal AI Assistant →
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.25fr)_420px]">
       <div className="space-y-6">
         <SectionHeading
-          eyebrow="Main Feature"
-          title="AI cyber assistant"
+          eyebrow="Saathi AI"
+          title="Intelligent cyber safety assistant"
           description="Chat in guest mode for instant guidance, then sign in to persist conversations in Firestore."
         />
         <Card className="overflow-hidden">
@@ -202,10 +264,10 @@ export function AssistantWorkspace() {
                 </div>
                 <div>
                   <p className="font-display text-lg font-semibold text-slate-950 dark:text-white">
-                    CyberSaathi Copilot
+                    Saathi AI Companion
                   </p>
                   <p className="text-sm text-slate-500 dark:text-slate-400">
-                    Prevention, response, and reporting for Indian users
+                    Prevention, response, and BNS 2023 guidelines for Indian users
                   </p>
                 </div>
               </div>
@@ -234,7 +296,7 @@ export function AssistantWorkspace() {
                         : "border border-slate-200/80 bg-slate-50 text-slate-800 dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-100"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap">{message.content}</p>
+                    {renderMessageContent(message)}
                     <p
                       className={`mt-2 text-[11px] ${
                         message.role === "user"
@@ -254,7 +316,7 @@ export function AssistantWorkspace() {
                 <button
                   key={suggestion}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50 dark:border-slate-800 dark:bg-slate-950/70 dark:text-slate-200 dark:hover:border-slate-700 dark:hover:bg-slate-900"
-                  onClick={() => setInput(suggestion)}
+                  onClick={() => void handleSend(suggestion)}
                   type="button"
                 >
                   <Sparkles className="mr-2 inline h-3.5 w-3.5 text-sky-500" />

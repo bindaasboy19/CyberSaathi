@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertTriangle, LoaderCircle, ShieldAlert } from "lucide-react";
+import { AlertTriangle, LoaderCircle, ShieldAlert, CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -8,7 +8,6 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ProgressBar } from "@/components/ui/progress-bar";
 import { Textarea } from "@/components/ui/textarea";
 import type { ScamAnalysis } from "@/types";
 
@@ -185,33 +184,101 @@ export function ScamAnalyzer() {
                 </div>
               )}
 
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                    {pick({ en: "Scam probability", hi: "स्कैम की संभावना" })}
-                  </p>
-                  <p className="mt-2 font-display text-4xl font-semibold text-slate-950 dark:text-white">
-                    {displayData.probability}%
-                  </p>
+              {/* Dynamic Threat Checklist & Gauge Grid */}
+              <div className="grid gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[220px_1fr] items-start">
+                
+                {/* Visual Gauge Dial */}
+                <div className="flex flex-col items-center justify-center p-4 bg-white/40 dark:bg-slate-950/30 rounded-3xl border border-slate-200/60 dark:border-slate-800/80">
+                  <div className="relative flex items-center justify-center w-36 h-20 overflow-hidden">
+                    <svg className="absolute top-0 left-0 w-full h-full transform -rotate-180" viewBox="0 0 120 70">
+                      <path
+                        d="M 10 60 A 50 50 0 0 1 110 60"
+                        fill="none"
+                        stroke="#e2e8f0"
+                        strokeWidth="8"
+                        className="dark:stroke-slate-800"
+                      />
+                      <path
+                        d="M 10 60 A 50 50 0 0 1 110 60"
+                        fill="none"
+                        stroke={
+                          displayData.riskLevel === "High"
+                            ? "#ef4444"
+                            : displayData.riskLevel === "Medium"
+                            ? "#f59e0b"
+                            : "#06b6d4"
+                        }
+                        strokeWidth="8"
+                        strokeDasharray={Math.PI * 50}
+                        strokeDashoffset={Math.PI * 50 - (Math.min(100, Math.max(0, displayData.probability)) / 100) * (Math.PI * 50)}
+                        className="transition-all duration-700 ease-out"
+                      />
+                    </svg>
+                    <div className="absolute bottom-0 text-center">
+                      <span className="text-3xl font-black text-slate-950 dark:text-white leading-none">
+                        {displayData.probability}%
+                      </span>
+                      <p className="text-[9px] text-slate-400 font-extrabold uppercase tracking-widest mt-1">
+                        {pick({ en: "Risk Level", hi: "जोखिम स्तर" })}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="mt-3 text-center">
+                    <Badge variant={riskVariants[displayData.riskLevel]}>
+                      {pick({
+                        en: `${displayData.riskLevel} Risk Verdict`,
+                        hi: `${displayData.riskLevel === "High" ? "उच्च" : displayData.riskLevel === "Medium" ? "मध्यम" : "कम"} जोखिम`,
+                      })}
+                    </Badge>
+                  </div>
                 </div>
-                <div className="space-y-2 text-right">
-                  <Badge variant={riskVariants[displayData.riskLevel]}>
-                    {pick({
-                      en: `${displayData.riskLevel} risk`,
-                      hi: `${displayData.riskLevel === "High" ? "उच्च" : displayData.riskLevel === "Medium" ? "मध्यम" : "कम"} जोखिम`,
-                    })}
-                  </Badge>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Source: {activeTab === "combined" 
-                      ? (result.source === "heuristic" ? "Rules engine" : "Dual-AI Consolidated")
-                      : activeTab === "gpt" ? "OpenAI GPT-4o" : "Google Gemini"}
-                  </p>
-                </div>
+
+                {/* Threat Indicators Audit Checklist */}
+                {(() => {
+                  const textToCheck = (content + " " + result.matchedSignals.join(" ")).toLowerCase();
+                  const urgencyAudit = textToCheck.includes("block") || textToCheck.includes("today") || textToCheck.includes("urgency") || textToCheck.includes("now") || textToCheck.includes("immediate") || textToCheck.includes("suspend") || textToCheck.includes("cancel");
+                  const linkAudit = textToCheck.includes("http") || textToCheck.includes("bit.ly") || textToCheck.includes("link") || textToCheck.includes("click") || textToCheck.includes("url") || textToCheck.includes("apk");
+                  const authorityAudit = textToCheck.includes("kyc") || textToCheck.includes("bank") || textToCheck.includes("police") || textToCheck.includes("arrest") || textToCheck.includes("support") || textToCheck.includes("officer");
+                  const financialAudit = textToCheck.includes("pin") || textToCheck.includes("otp") || textToCheck.includes("money") || textToCheck.includes("upi") || textToCheck.includes("pay") || textToCheck.includes("transfer") || textToCheck.includes("bank");
+
+                  return (
+                    <div className="space-y-3 p-4 bg-slate-100/40 dark:bg-slate-950/20 rounded-3xl border border-slate-200/50 dark:border-slate-800/60 w-full">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                        {pick({ en: "Threat Vector Audit", hi: "खतरा विश्लेषण ऑडिट" })}
+                      </h4>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="flex items-center gap-2 text-xs">
+                          {urgencyAudit ? <XCircle className="h-4 w-4 text-red-500 shrink-0" /> : <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />}
+                          <span className={urgencyAudit ? "text-red-700 dark:text-red-300 font-semibold" : "text-slate-500"}>
+                            {pick({ en: "High-pressure urgency language", hi: "दबाव व जल्दबाजी की भाषा" })}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          {linkAudit ? <XCircle className="h-4 w-4 text-red-500 shrink-0" /> : <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />}
+                          <span className={linkAudit ? "text-red-700 dark:text-red-300 font-semibold" : "text-slate-500"}>
+                            {pick({ en: "Suspicious links or APK download requests", hi: "संदिग्ध लिंक या एपीके अनुरोध" })}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          {authorityAudit ? <XCircle className="h-4 w-4 text-red-500 shrink-0" /> : <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />}
+                          <span className={authorityAudit ? "text-red-700 dark:text-red-300 font-semibold" : "text-slate-500"}>
+                            {pick({ en: "Impersonation of authority (Bank/Police)", hi: "अधिकारी का स्वांग (बैंक/पुलिस)" })}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs">
+                          {financialAudit ? <XCircle className="h-4 w-4 text-red-500 shrink-0" /> : <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />}
+                          <span className={financialAudit ? "text-red-700 dark:text-red-300 font-semibold" : "text-slate-500"}>
+                            {pick({ en: "Requests for UPI, PIN, OTP or Transfers", hi: "UPI, पिन, ओटीपी या मनी ट्रांसफर मांग" })}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
               </div>
 
-              <ProgressBar value={displayData.probability} />
-
-              <div className="rounded-[22px] bg-white/80 p-4 text-sm leading-6 text-slate-700 dark:bg-slate-950/70 dark:text-slate-200 whitespace-pre-wrap">
+              <div className="rounded-[22px] bg-white/80 p-4 text-sm leading-6 text-slate-700 dark:bg-slate-950/70 dark:text-slate-200 whitespace-pre-wrap border border-slate-150 dark:border-slate-800">
                 {displayData.explanation}
               </div>
 
@@ -259,6 +326,41 @@ export function ScamAnalyzer() {
                   </div>
                 </div>
               </div>
+
+              {/* Dynamic Classroom course recommendation */}
+              {(() => {
+                const textToCheck = (content + " " + result.matchedSignals.join(" ")).toLowerCase();
+                const isFinancial = textToCheck.includes("upi") || textToCheck.includes("money") || textToCheck.includes("bank") || textToCheck.includes("fraud") || textToCheck.includes("scam");
+                const isSocial = textToCheck.includes("whatsapp") || textToCheck.includes("facebook") || textToCheck.includes("instagram") || textToCheck.includes("stalk") || textToCheck.includes("threat");
+                
+                const recId = isFinancial ? "c-financial-literacy" : isSocial ? "c-privacy-safety" : "c-security-basics";
+                const recTitle = isFinancial 
+                  ? { en: "Digital Financial Literacy", hi: "डिजिटल वित्तीय साक्षरता" } 
+                  : isSocial 
+                  ? { en: "Social Media & Privacy Safety", hi: "सोशल मीडिया और गोपनीयता सुरक्षा" }
+                  : { en: "Cybersecurity Fundamentals", hi: "साइबर सुरक्षा बुनियादी बातें" };
+
+                return (
+                  <div className="rounded-2xl border border-indigo-250 bg-indigo-50/80 p-4 dark:border-indigo-900/60 dark:bg-indigo-950/30 flex flex-wrap items-center justify-between gap-3 animate-in fade-in duration-300">
+                    <div className="space-y-1">
+                      <p className="font-bold text-indigo-650 dark:text-indigo-400 text-xs uppercase tracking-wide">
+                        {pick({ en: "Recommended Safety Course", hi: "अनुशंसित सुरक्षा पाठ्यक्रम" })}
+                      </p>
+                      <p className="text-sm text-slate-800 dark:text-slate-200 leading-snug">
+                        {pick({
+                          en: `Take our interactive course "${pick(recTitle)}" to learn how to identify and avoid this type of threat in the future.`,
+                          hi: `भविष्य में इस प्रकार के खतरे को पहचानने और उससे बचने के लिए हमारा कोर्स "${pick(recTitle)}" लें।`,
+                        })}
+                      </p>
+                    </div>
+                    <Link href={`/learn?course=${recId}`}>
+                      <Button variant="secondary" className="rounded-xl text-xs font-bold">
+                        {pick({ en: "Enter Classroom →", hi: "क्लासरूम में प्रवेश करें →" })}
+                      </Button>
+                    </Link>
+                  </div>
+                );
+              })()}
 
               {displayData.riskLevel !== "Low" ? (
                 <div className="rounded-lg border border-sky-200 bg-sky-50 p-4 dark:border-sky-900/60 dark:bg-sky-950/30">

@@ -250,7 +250,7 @@ const FALLBACK_QUIZZES: Quiz[] = [
 ];
 
 export default function LearnPage() {
-  const { pick } = useLanguage();
+  const { language, pick } = useLanguage();
   const { user, configured } = useAuth();
 
   // Firestore DB states or fallbacks
@@ -267,6 +267,7 @@ export default function LearnPage() {
 
   // Filters & Toggles
   const [selectedTrack, setSelectedTrack] = useState<string>("all");
+  const [selectedProfile, setSelectedProfile] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
   const [dbEmpty, setDbEmpty] = useState(false);
@@ -373,6 +374,21 @@ export default function LearnPage() {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && courses.length > 0) {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get("course");
+      if (courseId) {
+        const matched = courses.some(c => c.id === courseId);
+        if (matched) {
+          const newUrl = window.location.pathname;
+          window.history.replaceState({}, document.title, newUrl);
+          handleSelectCourse(courseId);
+        }
+      }
+    }
+  }, [courses]);
 
   // Seed Handler
   const handleSeedCatalog = async () => {
@@ -531,7 +547,7 @@ export default function LearnPage() {
   };
 
   // Select Course
-  const handleSelectCourse = (courseId: string) => {
+  function handleSelectCourse(courseId: string) {
     setActiveCourseId(courseId);
     setActiveQuizId(null);
 
@@ -543,7 +559,7 @@ export default function LearnPage() {
       setActiveLessonId(null);
     }
     setIsMobileMenuOpen(false);
-  };
+  }
 
   // Select Lesson
   const handleSelectLesson = (lessonId: string) => {
@@ -681,6 +697,133 @@ export default function LearnPage() {
               hi: "प्रमाणित साइबर सुरक्षा कौशल विकसित करें। बुनियादी बातों से लेकर उन्नत वित्तीय और पहचान गोपनीयता सुरक्षा तक सीखें।",
             })}
           />
+
+          {/* Target Defendee Profile Selector */}
+          <div className="space-y-4 rounded-3xl border border-slate-200/80 bg-white/60 p-6 dark:border-slate-800 dark:bg-slate-950/40 backdrop-blur-md">
+            <div>
+              <h3 className="font-display text-lg font-bold text-slate-950 dark:text-white">
+                {pick({ en: "Personalized Safety Recommendation", hi: "व्यक्तिगत सुरक्षा अनुशंसा" })}
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                {pick({
+                  en: "Select who you are protecting today to view their specific cyber threats and launch matching safety courses.",
+                  hi: "उनके विशिष्ट साइबर खतरों को देखने और मिलान वाले सुरक्षा पाठ्यक्रमों को शुरू करने के लिए चुनें कि आज आप किसकी सुरक्षा कर रहे हैं।"
+                })}
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+              {[
+                {
+                  id: "seniors",
+                  label: { en: "Elders & Seniors", hi: "बुजुर्ग और वरिष्ठ नागरिक" },
+                  recommendedCourse: "c-financial-literacy"
+                },
+                {
+                  id: "youth",
+                  label: { en: "Children & Youth", hi: "बच्चे और युवा" },
+                  recommendedCourse: "c-security-basics"
+                },
+                {
+                  id: "women",
+                  label: { en: "Women Security", hi: "महिला सुरक्षा" },
+                  recommendedCourse: "c-privacy-safety"
+                },
+                {
+                  id: "merchants",
+                  label: { en: "UPI Merchants", hi: "UPI व्यापारी" },
+                  recommendedCourse: "c-financial-literacy"
+                }
+              ].map((profile) => (
+                <button
+                  key={profile.id}
+                  onClick={() => setSelectedProfile(selectedProfile === profile.id ? null : profile.id)}
+                  className={cn(
+                    "flex flex-col items-start text-left rounded-2xl border p-4 transition-all duration-300",
+                    selectedProfile === profile.id
+                      ? "border-sky-500 bg-sky-500/10 shadow-md ring-1 ring-sky-500"
+                      : "border-slate-200 bg-white hover:border-slate-350 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700"
+                  )}
+                >
+                  <span className="font-semibold text-sm text-slate-900 dark:text-white">{pick(profile.label)}</span>
+                  <span className="mt-1 text-[11px] text-slate-400 font-bold uppercase tracking-wide">
+                    {pick({ en: "View Critical Threats", hi: "महत्वपूर्ण खतरे देखें" })}
+                  </span>
+                </button>
+              ))}
+            </div>
+
+            {selectedProfile && (
+              <div className="rounded-2xl border border-sky-200 bg-sky-50/50 p-4 dark:border-sky-950/60 dark:bg-sky-950/20 animate-in slide-in-from-top-2 duration-300">
+                {(() => {
+                  const current = [
+                    {
+                      id: "seniors",
+                      title: { en: "Target Profile: Elders & Seniors", hi: "लक्षित प्रोफ़ाइल: बुजुर्ग और वरिष्ठ" },
+                      threats: {
+                        en: ["KYC update SMS warning calls", "Fake bank service updates", "Investment/Pension fraud"],
+                        hi: ["KYC अपडेट एसएमएस चेतावनी कॉल", "फर्जी बैंक सेवा अपडेट", "निवेश/पेंशन धोखाधड़ी"]
+                      },
+                      recommendedCourse: "c-financial-literacy",
+                      courseTitle: { en: "Digital Financial Literacy", hi: "डिजिटल वित्तीय साक्षरता" }
+                    },
+                    {
+                      id: "youth",
+                      title: { en: "Target Profile: Children & Youth", hi: "लक्षित प्रोफ़ाइल: बच्चे और युवा" },
+                      threats: {
+                        en: ["Online gaming weapon buying traps", "Cyber stalking/bullying", "Unauthorized app sideloads"],
+                        hi: ["ऑनलाइन गेमिंग हथियार खरीदने के जाल", "साइबर स्टॉकिंग/बदमाशी", "अनाधिकृत ऐप साइडलोड"]
+                      },
+                      recommendedCourse: "c-security-basics",
+                      courseTitle: { en: "Cybersecurity Fundamentals", hi: "साइबर सुरक्षा बुनियादी बातें" }
+                    },
+                    {
+                      id: "women",
+                      title: { en: "Target Profile: Women Security", hi: "लक्षित प्रोफ़ाइल: महिला सुरक्षा" },
+                      threats: {
+                        en: ["AI Deepfake Morphing", "Unsolicited photo threats", "Social media impersonation"],
+                        hi: ["एआई डीपफेक मॉर्फिंग", "अवांछित फोटो धमकियां", "सोशल मीडिया प्रतिरूपण"]
+                      },
+                      recommendedCourse: "c-privacy-safety",
+                      courseTitle: { en: "Social Media & Privacy Safety", hi: "सोशल मीडिया और गोपनीयता सुरक्षा" }
+                    },
+                    {
+                      id: "merchants",
+                      title: { en: "Target Profile: UPI Merchants", hi: "लक्षित प्रोफ़ाइल: UPI व्यापारी" },
+                      threats: {
+                        en: ["Fake soundbox notification apps", "Reverse payment scam QR codes", "Google My Business support frauds"],
+                        hi: ["फर्जी साउंडबॉक्स अधिसूचना ऐप", "रिवर्स भुगतान स्कैम क्यूआर कोड", "गूगल माय बिजनेस सपोर्ट धोखाधड़ी"]
+                      },
+                      recommendedCourse: "c-financial-literacy",
+                      courseTitle: { en: "Digital Financial Literacy", hi: "डिजिटल वित्तीय साक्षरता" }
+                    }
+                  ].find((p) => p.id === selectedProfile)!;
+
+                  return (
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-white text-sm">{pick(current.title)}</h4>
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {(language === "hi" ? current.threats.hi : current.threats.en).map((threat: string) => (
+                            <span key={threat} className="inline-flex items-center rounded-md bg-amber-500/10 px-2.5 py-1 text-xs font-bold text-amber-700 dark:text-amber-300">
+                              ⚠️ {threat}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <Button
+                        onClick={() => handleSelectCourse(current.recommendedCourse)}
+                        className="bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs gap-1.5 shrink-0 self-start md:self-center"
+                      >
+                        <Play className="h-4 w-4" />
+                        {pick({ en: "Start Recommended Course", hi: "अनुशंसित कोर्स शुरू करें" })} ({pick(current.courseTitle)})
+                      </Button>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+          </div>
 
           {/* Database Setup State Alert for Admins / Developers */}
           {dbError && (

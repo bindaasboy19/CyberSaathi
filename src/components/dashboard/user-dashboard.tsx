@@ -202,9 +202,148 @@ export function UserDashboard() {
           {activeTab === "admin" && profile?.role === "admin" ? (
             <AdminView />
           ) : (
-            <div className="space-y-6">
-              {/* Cyber Learning Hub Progress Section */}
-              <Card className="border border-slate-200/80 bg-white/50 shadow-xl backdrop-blur-md dark:border-slate-900/60 dark:bg-slate-950/60 overflow-hidden">
+            (() => {
+              // Calculate Security Score
+              let score = 55; // Base profile configuration score
+              const progressVals = Object.values(userProgressList);
+              if (progressVals.length > 0) {
+                const avgProgress = progressVals.reduce((acc, curr) => acc + curr.progressPercent, 0) / progressVals.length;
+                score += Math.round(avgProgress * 0.35); // Max 35 points
+              }
+              score += Math.min(10, legalCases.length * 3); // Max 10 points
+              score += Math.min(10, reports.length * 2); // Max 10 points
+              const finalScore = Math.min(100, score);
+
+              // Milestones indicators
+              const hasAcademicDebut = progressVals.some((p) => p.progressPercent > 0);
+              const hasActiveGuardian = reports.length > 0 || legalCases.length > 0;
+              const hasEcosystemMaster = finalScore >= 80;
+
+              return (
+                <div className="space-y-6">
+                  {/* Top Stats Column */}
+                  <div className="grid gap-6 md:grid-cols-[260px_1fr]">
+                    
+                    {/* Security Score Widget */}
+                    <Card className="border border-slate-200/80 bg-white/50 shadow-xl backdrop-blur-md dark:border-slate-900/60 dark:bg-slate-950/60 overflow-hidden flex flex-col items-center justify-center p-5 text-center">
+                      <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-3">
+                        {pick({ en: "Profile Safety Rating", hi: "प्रोफ़ाइल सुरक्षा रेटिंग" })}
+                      </h4>
+                      <div className="relative flex items-center justify-center w-36 h-36">
+                        <svg className="absolute w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                          {/* Inner circle track */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="40"
+                            fill="none"
+                            stroke="#e2e8f0"
+                            strokeWidth="8"
+                            className="dark:stroke-slate-800"
+                          />
+                          {/* Inner circle progress */}
+                          <circle
+                            cx="50"
+                            cy="50"
+                            r="40"
+                            fill="none"
+                            stroke={
+                              finalScore < 70
+                                ? "#ef4444"
+                                : finalScore < 85
+                                ? "#f59e0b"
+                                : "#10b981"
+                            }
+                            strokeWidth="8"
+                            strokeDasharray={2 * Math.PI * 40}
+                            strokeDashoffset={2 * Math.PI * 40 - (finalScore / 100) * (2 * Math.PI * 40)}
+                            className="transition-all duration-1000 ease-out"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute text-center space-y-0.5">
+                          <span className="text-4xl font-black text-slate-950 dark:text-white leading-none">
+                            {finalScore}
+                          </span>
+                          <span className="text-[10px] text-slate-400 font-extrabold uppercase block tracking-wider">
+                            / 100
+                          </span>
+                        </div>
+                      </div>
+                      <p className="mt-4 text-xs font-bold text-slate-700 dark:text-slate-350">
+                        Status:{" "}
+                        <span className={finalScore < 70 ? "text-red-500" : finalScore < 85 ? "text-amber-500" : "text-emerald-500"}>
+                          {finalScore < 70
+                            ? pick({ en: "Vulnerable", hi: "असुरक्षित" })
+                            : finalScore < 85
+                            ? pick({ en: "Improving", hi: "सुधार जारी" })
+                            : pick({ en: "Optimal", hi: "इष्टतम" })}
+                        </span>
+                      </p>
+                    </Card>
+
+                    {/* Accomplishments Milestone Grid */}
+                    <Card className="border border-slate-200/80 bg-white/50 shadow-xl backdrop-blur-md dark:border-slate-900/60 dark:bg-slate-950/60 p-5 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-[10px] font-extrabold uppercase tracking-widest text-slate-500 mb-3">
+                          {pick({ en: "Ecosystem Achievements", hi: "पारिस्थितिकी तंत्र उपलब्धियां" })}
+                        </h4>
+                        <div className="grid gap-4 sm:grid-cols-3">
+                          {[
+                            {
+                              title: { en: "Academic Debut", hi: "अकादमिक पदार्पण" },
+                              desc: { en: "Began first learning course", hi: "पहला पाठ्यकर्म शुरू किया" },
+                              unlocked: hasAcademicDebut
+                            },
+                            {
+                              title: { en: "Active Guardian", hi: "सक्रिय रक्षक" },
+                              desc: { en: "Compiled a threat draft", hi: "खतरे की रिपोर्ट दर्ज की" },
+                              unlocked: hasActiveGuardian
+                            },
+                            {
+                              title: { en: "Safety Master", hi: "सुरक्षा मास्टर" },
+                              desc: { en: "Achieved optimal score", hi: "सर्वोत्तम स्कोर प्राप्त किया" },
+                              unlocked: hasEcosystemMaster
+                            }
+                          ].map((milestone, idx) => (
+                            <div
+                              key={idx}
+                              className={`rounded-2xl border p-4 transition-all duration-300 flex flex-col justify-between ${
+                                milestone.unlocked
+                                  ? "border-emerald-500 bg-emerald-500/5 text-emerald-950 dark:text-emerald-300"
+                                  : "border-slate-100 bg-slate-50/55 dark:border-slate-800 dark:bg-slate-900/30 text-slate-400"
+                              }`}
+                            >
+                              <div>
+                                <div className="flex items-center justify-between">
+                                  <Trophy className={`h-5 w-5 ${milestone.unlocked ? "text-emerald-500" : "text-slate-350 dark:text-slate-855"}`} />
+                                  {milestone.unlocked && (
+                                    <span className="text-[8px] font-extrabold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded-full">
+                                      {pick({ en: "Unlocked", hi: "अनलॉक" })}
+                                    </span>
+                                  )}
+                                </div>
+                                <h5 className="mt-3 font-bold text-xs leading-none">{pick(milestone.title)}</h5>
+                              </div>
+                              <p className="mt-2 text-[10px] leading-relaxed text-slate-500">{pick(milestone.desc)}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Onboarding hint */}
+                      <p className="mt-4 text-[11px] text-slate-455">
+                        💡 {pick({
+                          en: "Tip: Completing quizzes with 80%+ scores and checking active scams increase your overall Profile Safety Rating.",
+                          hi: "सुझाव: 80%+ अंकों के साथ क्विज़ पूरा करने और सक्रिय घोटालों की जांच करने से आपकी रेटिंग बढ़ती है।"
+                        })}
+                      </p>
+                    </Card>
+
+                  </div>
+
+                  {/* Cyber Learning Hub Progress Section */}
+                  <Card className="border border-slate-200/80 bg-white/50 shadow-xl backdrop-blur-md dark:border-slate-900/60 dark:bg-slate-950/60 overflow-hidden">
                 <CardHeader className="p-5 pb-3">
                   <div className="flex items-center gap-2">
                     <Award className="h-5 w-5 text-sky-500 animate-pulse" />
@@ -374,9 +513,11 @@ export function UserDashboard() {
                 </Card>
               </div>
             </div>
-          )}
-        </div>
-      )}
+          );
+        })()
+        )}
+      </div>
+    )}
     </div>
   );
 }

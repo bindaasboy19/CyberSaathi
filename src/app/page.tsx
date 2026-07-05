@@ -4,12 +4,27 @@ import { ArrowRight, BellRing, Bot, Gavel, Newspaper, ShieldAlert } from "lucide
 import Link from "next/link";
 
 import { useLanguage } from "@/components/providers/language-provider";
+import { useAuth } from "@/components/providers/auth-provider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { StatCard } from "@/components/ui/stat-card";
 import { homeMetrics, responseChecklist, scenarioGuides } from "@/lib/data/content";
 import { pickText } from "@/lib/utils";
+
+// Landing sections
+import Hero from "@/components/landing/hero";
+import Stats from "@/components/landing/stats";
+import Problem from "@/components/landing/problem";
+import ScamAnalyzerSandbox from "@/components/landing/scam-analyzer-sandbox";
+import AIShowcase from "@/components/landing/ai-showcase";
+import LearningHubPreview from "@/components/landing/learning-hub-preview";
+import Comparison from "@/components/landing/comparison";
+import Founder from "@/components/landing/founder";
+import Trust from "@/components/landing/trust";
+import Roadmap from "@/components/landing/roadmap";
+import FAQ from "@/components/landing/faq";
+import CTA from "@/components/landing/cta";
 
 const quickLinks = [
   {
@@ -40,6 +55,26 @@ const quickLinks = [
 
 export default function Home() {
   const { language } = useLanguage();
+  const { user } = useAuth();
+
+  if (!user) {
+    return (
+      <div className="w-full flex flex-col bg-[#030303]">
+        <Hero />
+        <Stats />
+        <Problem />
+        <ScamAnalyzerSandbox />
+        <AIShowcase />
+        <LearningHubPreview />
+        <Comparison />
+        <Founder />
+        <Trust />
+        <Roadmap />
+        <FAQ />
+        <CTA />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
