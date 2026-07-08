@@ -17,6 +17,7 @@ import {
   Newspaper,
   ShieldAlert,
   HelpCircle,
+  Globe,
 } from "lucide-react";
 
 import { Topbar } from "@/components/layout/topbar";
@@ -31,6 +32,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { pick } = useLanguage();
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const currentYear = new Date().getFullYear();
 
   // Close the More menu when route changes
   useEffect(() => {
@@ -61,7 +63,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
 
   const isAuthPath = ["/login", "/register"].includes(pathname);
-  
+
   const isMarketingLayout = (!user && pathname === "/") || [
     "/about",
     "/technology",
@@ -146,6 +148,19 @@ export function AppShell({ children }: { children: ReactNode }) {
             <main className="flex-1 min-h-0">
               {children}
             </main>
+
+            {/* Footer */}
+            <footer className="mt-8 pt-4 pb-2 border-t border-slate-200/50 dark:border-slate-800/50">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+                <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+                  <span>&copy; {currentYear} CyberSaathi. All rights reserved.</span>
+                  <span className="hidden sm:inline text-slate-300 dark:text-slate-700">|</span>
+                  <span className="flex items-center gap-1">
+                    <Globe className="w-3.5 h-3.5" /> Made for India
+                  </span>
+                </div>
+              </div>
+            </footer>
           </div>
         </div>
       </div>
@@ -200,7 +215,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           >
             {/* Close handle indicator */}
             <div className="h-1.5 w-12 bg-slate-300 dark:bg-slate-700 rounded-full mx-auto cursor-pointer mb-1" onClick={() => setShowMoreMenu(false)} />
-            
+
             <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
               <span className="font-display text-sm font-extrabold text-slate-800 dark:text-slate-200 tracking-wide uppercase">
                 {pick({ en: "Explore Modules", hi: "सभी विकल्प खोजें" })}
