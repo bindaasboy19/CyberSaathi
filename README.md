@@ -169,3 +169,4 @@ Manage your local development using the following npm scripts:
 5. Click on the CyberSaathi icon in your toolbar, input the API base address (default `http://localhost:3000`), and click Save.
 6. The extension will now monitor navigations, block phishing domains in real-time, and let you scan links or messages manually.
 # SwaShop
+# SwaShop
