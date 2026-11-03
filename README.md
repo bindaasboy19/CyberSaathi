@@ -170,3 +170,4 @@ Manage your local development using the following npm scripts:
 6. The extension will now monitor navigations, block phishing domains in real-time, and let you scan links or messages manually.
 # SwaShop
 # SwaShop
+# SwaShop
